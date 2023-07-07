@@ -17,6 +17,7 @@ class CreateGensetFotoTable extends Migration
             $table->id();
             $table->foreignId('genset_nilai_id')->constrained('genset_nilai')->onDelete('cascade')->onUpdate('cascade')->nullable();
             $table->string('url');
+            $table->string('deskripsi')->nullable();
             $table->timestamps();
         });
     }

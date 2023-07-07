@@ -17,6 +17,7 @@ class CreateInverterFotoTable extends Migration
             $table->id();
             $table->foreignId('inverter_nilai_id')->constrained('inverter_nilai')->onDelete('cascade')->onUpdate('cascade');
             $table->string('url');
+            $table->string('deskripsi')->nullable();
             $table->timestamps();
         });
     }

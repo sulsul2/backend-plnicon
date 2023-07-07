@@ -17,12 +17,12 @@ class CreateMcbTable extends Migration
             $table->id();
             $table->foreignId('pdb_id')->constrained('pdb')->onDelete('cascade')->onUpdate('cascade');
             $table->string('nama');
-            $table->string('phasa');
+            $table->string('jumlah_phasa');
             $table->string('merk');
             $table->string('kapasitas');
             $table->string('a_terukur');
             $table->string('tipe');
-            $table->string('peruntukan');
+            $table->string('peruntukan')->nullable();
             $table->timestamps();
         });
     }

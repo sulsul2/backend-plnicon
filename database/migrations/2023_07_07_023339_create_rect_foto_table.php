@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateExAlarmFotoTable extends Migration
+class CreateRectFotoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateExAlarmFotoTable extends Migration
      */
     public function up()
     {
-        Schema::create('ex_alarm_foto', function (Blueprint $table) {
+        Schema::create('rect_foto', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('ex_alarm_id')->constrained('ex_alarm')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('rect_id')->constrained('rect')->onDelete('cascade')->onUpdate('cascade');
             $table->string('url');
             $table->string('deskripsi')->nullable();
             $table->timestamps();
@@ -29,6 +29,6 @@ class CreateExAlarmFotoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ex_alarm_foto');
+        Schema::dropIfExists('rect_foto');
     }
 }

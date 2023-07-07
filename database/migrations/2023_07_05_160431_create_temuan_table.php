@@ -18,9 +18,7 @@ class CreateTemuanTable extends Migration
             $table->foreignId('pm_id')->constrained('jadwal_pm')->onDelete('cascade')->onUpdate('cascade')->nullable();
             $table->foreignId('pop_id')->constrained('data_pop')->onDelete('cascade')->onUpdate('cascade');
             $table->string('status')->default('CHECK');
-            $table->timestamp('plan');
-            $table->timestamp('realisasi');
-            $table->string('hasil');
+            $table->string('hasil')->nullable();
             $table->timestamps();
         });
     }

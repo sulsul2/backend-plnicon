@@ -17,9 +17,9 @@ class CreateKwhMeterNilaiTable extends Migration
             $table->id();
             $table->foreignId('kwh_id')->constrained('kwh_meter')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('pm_id')->constrained('jadwal_pm')->onDelete('cascade')->onUpdate('cascade')->nullable();
-            $table->float('bebankwhr')->nullable();
-            $table->float('bebankwhs')->nullable();
-            $table->float('bebankwht')->nullable();
+            $table->float('load_r')->nullable();
+            $table->float('load_s')->nullable();
+            $table->float('load_t')->nullable();
             $table->float('vrn')->nullable();
             $table->float('vsn')->nullable();
             $table->float('vtn')->nullable();

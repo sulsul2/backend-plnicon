@@ -18,6 +18,7 @@ class CreatePerangkatFotoTable extends Migration
             $table->foreignId('rack_id')->constrained('data_rack')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('perangkat_nilai_id')->constrained('perangkat_nilai')->onDelete('cascade')->onUpdate('cascade')->nullable();
             $table->string('url');
+            $table->string('deskripsi')->nullable();
             $table->timestamps();
         });
     }

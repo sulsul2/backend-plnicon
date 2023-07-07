@@ -17,6 +17,7 @@ class CreateEnvironmentFotoTable extends Migration
             $table->id();
             $table->foreignId('env_id')->constrained('environment')->onDelete('cascade')->onUpdate('cascade');
             $table->string('url');
+            $table->string('deskripsi')->nullable();
             $table->timestamps();
         });
     }

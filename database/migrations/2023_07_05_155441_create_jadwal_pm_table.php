@@ -25,13 +25,14 @@ class CreateJadwalPmTable extends Migration
             $table->string('jenis');
             $table->string('kategori');
             $table->string('detail_pm');
-            $table->string('hostname');
-            $table->string('fat_id');
+            $table->string('hostname')->nullable();
+            $table->string('fat_id')->nullable();
             $table->string('wilayah');
             $table->string('area');
             $table->string('lokasi_osp')->nullable();
             $table->string('koordinat_awal')->nullable();
             $table->string('koordinat_akhir')->nullable();
+            $table->string('dokumen_osp')->nullable();
             $table->timestamps();
         });
     }

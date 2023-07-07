@@ -17,6 +17,7 @@ class CreatePdbFotoTable extends Migration
             $table->id();
             $table->foreignId('pdb_nilai_id')->constrained('pdb_nilai')->onDelete('cascade')->onUpdate('cascade');
             $table->string('url');
+            $table->string('deskripsi')->nullable();
             $table->timestamps();
         });
     }

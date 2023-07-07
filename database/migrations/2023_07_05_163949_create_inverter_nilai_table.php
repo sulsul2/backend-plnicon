@@ -21,7 +21,7 @@ class CreateInverterNilaiTable extends Migration
             $table->string('input_ac');
             $table->string('input_dc');
             $table->string('output_dc');
-            $table->string('mainfail');
+            $table->string('mainfall');
             $table->string('hasil_uji');
             $table->string('temuan')->nullable();
             $table->string('rekomendasi')->nullable();

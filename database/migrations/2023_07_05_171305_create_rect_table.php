@@ -18,7 +18,7 @@ class CreateRectTable extends Migration
             $table->foreignId('pop_id')->constrained('data_pop')->onDelete('cascade')->onUpdate('cascade');
             $table->string('merk');
             $table->string('tipe');
-            $table->string('beban');
+            $table->integer('jumlah_phasa');
             $table->string('sn');
             $table->integer('slot_modul');
             $table->integer('modul_terpasang');

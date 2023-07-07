@@ -17,6 +17,7 @@ class CreateAirConditionerFotoTable extends Migration
             $table->id();
             $table->foreignId('ac_nilai_id')->constrained('air_conditioner_nilai')->onDelete('cascade')->onUpdate('cascade');
             $table->string('url');
+            $table->string('deskripsi')->nullable();
             $table->timestamps();
         });
     }

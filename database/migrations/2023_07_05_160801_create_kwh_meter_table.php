@@ -16,7 +16,7 @@ class CreateKwhMeterTable extends Migration
         Schema::create('kwh_meter', function (Blueprint $table) {
             $table->id();
             $table->foreignId('pop_id')->constrained('data_pop')->onDelete('cascade')->onUpdate('cascade');
-            $table->integer('phasa');
+            $table->integer('jumlah_phasa');
             $table->float('daya');
             $table->float('capmcbr')->nullable();
             $table->float('capmcbs')->nullable();

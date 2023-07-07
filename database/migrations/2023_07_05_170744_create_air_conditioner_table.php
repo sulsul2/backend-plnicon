@@ -16,7 +16,7 @@ class CreateAirConditionerTable extends Migration
         Schema::create('air_conditioner', function (Blueprint $table) {
             $table->id();
             $table->foreignId('pop_id')->constrained('data_pop')->onDelete('cascade')->onUpdate('cascade');
-            $table->string('name');
+            $table->string('nama');
             $table->string('kondisi');
             $table->string('merk');
             $table->string('kapasitas');

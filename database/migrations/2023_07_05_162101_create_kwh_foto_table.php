@@ -17,6 +17,7 @@ class CreateKwhFotoTable extends Migration
             $table->id();
             $table->foreignId('kwh_nilai_id')->constrained('kwh_meter_nilai')->onDelete('cascade')->onUpdate('cascade');
             $table->string('url');
+            $table->string('deskripsi')->nullable();
             $table->timestamps();
         });
     }
