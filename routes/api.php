@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\TemuanController;
 use App\Http\Controllers\API\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,4 +24,9 @@ Route::middleware('auth:sanctum')->group(function () {
     // USER
     Route::get('user', [UserController::class, 'get']);
     Route::post('logout', [UserController::class, 'logout']);
+
+    // Temuan
+    Route::get('temuan', [TemuanController::class, 'all']);
+    Route::post('temuan', [TemuanController::class, 'add']);
+    Route::post('edit-temuan', [TemuanController::class, 'update']);
 });
