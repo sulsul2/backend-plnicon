@@ -2,6 +2,10 @@
 
 use App\Http\Controllers\API\TemuanController;
 use App\Http\Controllers\API\DataPopController;
+use App\Http\Controllers\API\EnvironmentController;
+use App\Http\Controllers\API\EnvironmentFotoController;
+use App\Http\Controllers\API\ExAlarmController;
+use App\Http\Controllers\API\ExAlarmFotoController;
 use App\Http\Controllers\API\InverterController;
 use App\Http\Controllers\API\InverterFotoController;
 use App\Http\Controllers\API\InverterNilaiController;
@@ -59,4 +63,24 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('inverter-foto', [InverterFotoController::class,"all"]);
     Route::post('inverter-foto', [InverterFotoController::class,"add"]);
     Route::post('edit-inverter-foto', [InverterFotoController::class,"update"]);
+
+    //Environment
+    Route::get('environment', [EnvironmentController::class,"all"]);
+    Route::post('environment', [EnvironmentController::class,"add"]);
+    Route::post('edit-environment', [EnvironmentController::class,"update"]);
+    
+    //Environment Foto
+    Route::get('environment-foto', [EnvironmentFotoController::class,"all"]);
+    Route::post('environment-foto', [EnvironmentFotoController::class,"add"]);
+    Route::post('edit-environment-foto', [EnvironmentFotoController::class,"update"]);
+    
+    //Ex Alarm
+    Route::get('ex-alarm', [ExAlarmController::class,"all"]);
+    Route::post('ex-alarm', [ExAlarmController::class,"add"]);
+    Route::post('edit-ex-alarm', [ExAlarmController::class,"update"]);
+    
+    //Ex Alarm Foto
+    Route::get('ex-alarm-foto', [ExAlarmFotoController::class,"all"]);
+    Route::post('ex-alarm-foto', [ExAlarmFotoController::class,"add"]);
+    Route::post('edit-ex-alarm-foto', [ExAlarmFotoController::class,"update"]);
 });
