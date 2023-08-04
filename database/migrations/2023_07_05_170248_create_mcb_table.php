@@ -23,6 +23,7 @@ class CreateMcbTable extends Migration
             $table->string('a_terukur');
             $table->string('tipe');
             $table->string('peruntukan')->nullable();
+            $table->timestamp('tgl_instalasi');
             $table->timestamps();
         });
     }

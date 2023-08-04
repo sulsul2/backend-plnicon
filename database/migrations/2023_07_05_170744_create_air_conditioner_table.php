@@ -22,6 +22,7 @@ class CreateAirConditionerTable extends Migration
             $table->string('kapasitas');
             $table->string('tekanan_freon');
             $table->string('mode_hidup');
+            $table->timestamp('tgl_instalasi');
             $table->timestamps();
         });
     }

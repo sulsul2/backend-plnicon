@@ -23,6 +23,7 @@ class CreateDataPerangkatTable extends Migration
             $table->string('terminasi');
             $table->string('jenis');
             $table->string('tipe');
+            $table->timestamp('tgl_instalasi');
             $table->timestamps();
         });
     }

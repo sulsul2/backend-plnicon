@@ -21,6 +21,7 @@ class CreateInverterTable extends Migration
             $table->string('merk');
             $table->string('tipe');
             $table->integer('kapasitas');
+            $table->timestamp('tgl_instalasi');
             $table->timestamps();
         });
     }

@@ -26,6 +26,7 @@ class CreateExAlarmTable extends Migration
             $table->string('perangkat_ea');
             $table->string('temuan')->nullable();
             $table->string('rekomendasi')->nullable();
+            $table->timestamp('tgl_instalasi');
             $table->timestamps();
         });
     }

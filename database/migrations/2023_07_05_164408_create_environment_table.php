@@ -26,6 +26,7 @@ class CreateEnvironmentTable extends Migration
             $table->string('kebersihan_bangunan');
             $table->string('temuan')->nullable();
             $table->string('rekomendasi')->nullable();
+            $table->timestamp('tgl_instalasi');
             $table->timestamps();
         });
     }

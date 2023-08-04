@@ -23,6 +23,7 @@ class CreateRectTable extends Migration
             $table->integer('slot_modul');
             $table->integer('modul_terpasang');
             $table->integer('modul_control');
+            $table->timestamp('tgl_instalasi');
             $table->timestamps();
         });
     }

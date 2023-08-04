@@ -20,6 +20,7 @@ class CreatePdbTable extends Migration
             $table->string('tipe');
             $table->string('arester');
             $table->string('arester_tipe');
+            $table->timestamp('tgl_instalasi');
             $table->timestamps();
         });
     }

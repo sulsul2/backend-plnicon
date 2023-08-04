@@ -34,6 +34,7 @@ class CreateKwhMeterTable extends Migration
             $table->float('luas_kabels')->nullable();
             $table->float('luas_kabelt')->nullable();
             $table->float('luas_kabeln')->nullable();
+            $table->timestamp('tgl_instalasi');
             $table->timestamps();
         });
     }

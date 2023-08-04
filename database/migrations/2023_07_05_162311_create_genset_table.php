@@ -27,6 +27,7 @@ class CreateGensetTable extends Migration
             $table->string('merk_accu');
             $table->string('tipe_batt_charger');
             $table->string('switch');
+            $table->timestamp('tgl_instalasi');
             $table->timestamps();
         });
     }

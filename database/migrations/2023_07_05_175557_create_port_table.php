@@ -24,6 +24,7 @@ class CreatePortTable extends Migration
             $table->string('port_converter')->nullable();
             $table->string('cwdm')->nullable();
             $table->string('port_cwdm')->nullable();
+            $table->timestamp('tgl_instalasi');
             $table->timestamps();
         });
     }

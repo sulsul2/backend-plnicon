@@ -18,6 +18,7 @@ class CreateDataRackTable extends Migration
             $table->foreignId('pop_id')->constrained('data_pop')->onDelete('cascade')->onUpdate('cascade');
             $table->integer('nomor_rack');
             $table->string('lokasi');
+            $table->timestamp('tgl_instalasi');
             $table->timestamps();
         });
     }
