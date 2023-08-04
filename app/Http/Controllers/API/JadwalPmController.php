@@ -12,7 +12,7 @@ class JadwalPmController extends Controller
 {
     function all(request $request){
         $jadwal_pm = JadwalPm::with(['datapop','user']);
-        return ResponseFormatter::success($jadwal_pm, "Get Jadwal PM Successfully");
+        return ResponseFormatter::success($jadwal_pm->get(), "Get Jadwal PM Successfully");
     }
 
     function add(request $request){
@@ -30,7 +30,7 @@ class JadwalPmController extends Controller
             ]);
 
             $jadwal_pm = JadwalPm::create([
-                'pm_kode' => "PM" + $request->plan,
+                'pm_kode' => "PM".$request->plan,
                 'pop_id' => $request->pop_id,
                 'user_id' => $request->user_id,
                 'plan' => $request->plan,
@@ -48,7 +48,7 @@ class JadwalPmController extends Controller
                 'dokumen_osp' => $request->dokumen_osp,
 
             ]);
-            return ResponseFormatter::success($jadwal_pm, "Create Jadwal PM Successfully");
+            return ResponseFormatter::success($jadwal_pm->load(['datapop','user']), "Create Jadwal PM Successfully");
 
         } catch (ValidationException $error) {
             return ResponseFormatter::error(
@@ -95,7 +95,7 @@ class JadwalPmController extends Controller
                 'dokumen_osp' => $request->dokumen_osp,
 
             ]);
-            return ResponseFormatter::success($jadwal_pm, "Edit Jadwal PM Successfully");
+            return ResponseFormatter::success($jadwal_pm->load(['datapop','user']), "Edit Jadwal PM Successfully");
 
         } catch (ValidationException $error) {
             return ResponseFormatter::error(

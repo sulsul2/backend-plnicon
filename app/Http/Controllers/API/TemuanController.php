@@ -12,12 +12,12 @@ class TemuanController extends Controller
 {
     public function all(Request $request)
     {
-        $temuan_id = $request->input('temuan_id');
+        $temuan_id = $request->input('id');
 
-        $temuan = Temuan::with([['jadwalPm', 'dataPop']]);
+        $temuan = Temuan::with(['jadwalPm', 'dataPop']);
 
         if ($temuan_id) {
-            $temuan->where('temuan_id', $temuan_id)->first();
+            $temuan->where('id', $temuan_id)->first();
         }
 
         return ResponseFormatter::success(
@@ -42,7 +42,7 @@ class TemuanController extends Controller
             ]);
 
             return ResponseFormatter::success(
-                $temuan->load(['images']),
+                $temuan->load(['jadwalPm','dataPop']),
                 'Create Temuan Successfully'
             );
         } catch (ValidationException $error) {
@@ -61,14 +61,14 @@ class TemuanController extends Controller
     {
         try {
             $request->validate([
-                'temuan_id' => 'required',
+                'id' => 'required',
                 'pm_id' => 'required',
                 'pop_id' => 'required',
                 'status' => 'required|in:CHECK,PLAN,REALISASI',
                 'hasil' => 'string',
             ]);
 
-            $temuan = Temuan::find($request->temuan_id);
+            $temuan = Temuan::find($request->id);
 
             if (!$temuan) {
                 return ResponseFormatter::error(
@@ -78,7 +78,7 @@ class TemuanController extends Controller
                 );
             }
 
-            $temuan = $temuan->update([
+            $temuan->update([
                 'pm_id' => $request->pm_id,
                 'pop_id' => $request->pop_id,
                 'status' => $request->status,

@@ -9,7 +9,9 @@ class DataPop extends Model
 {
     use HasFactory;
 
-    protected $guard = [
+    protected $table = "data_pop";
+
+    protected $guarded = [
         'id',
         'created_at',
         'updated_at',

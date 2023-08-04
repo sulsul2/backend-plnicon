@@ -9,12 +9,13 @@ class Temuan extends Model
 {
     use HasFactory;
 
+    protected $table = "temuan";
     /**
      * The attributes that are not assignable.
      *
      * @var string[]
      */
-    protected $guard = [
+    protected $guarded = [
         'id',
         'created_at',
         'updated_at',

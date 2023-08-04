@@ -31,15 +31,15 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('temuan', [TemuanController::class, 'all']);
     Route::post('temuan', [TemuanController::class, 'add']);
     Route::post('edit-temuan', [TemuanController::class, 'update']);
-    
+
     //Data Pop
     Route::get('pop', [DataPopController::class,"all"]);
     Route::post('pop', [DataPopController::class,"add"]);
-    Route::post('editpop', [DataPopController::class,"update"]);
+    Route::post('edit-pop', [DataPopController::class,"update"]);
     
     //Jadwal PM
     Route::get('jadwalpm', [JadwalPmController::class,"all"]);
     Route::post('jadwalpm', [JadwalPmController::class,"add"]);
-    Route::post('editjadwalpm', [JadwalPmController::class,"update"]);
+    Route::post('edit-jadwalpm', [JadwalPmController::class,"update"]);
     
 });

@@ -9,7 +9,9 @@ class JadwalPm extends Model
 {
     use HasFactory;
 
-    protected $guard = [
+    protected $table = "jadwal_pm";
+
+    protected $guarded = [
         'id',
         'created_at',
         'updated_at',
