@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\TemuanController;
 use App\Http\Controllers\API\DataPopController;
+use App\Http\Controllers\API\JadwalPmController;
 use App\Http\Controllers\API\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -30,9 +31,15 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('temuan', [TemuanController::class, 'all']);
     Route::post('temuan', [TemuanController::class, 'add']);
     Route::post('edit-temuan', [TemuanController::class, 'update']);
+    
+    //Data Pop
+    Route::get('pop', [DataPopController::class,"all"]);
+    Route::post('pop', [DataPopController::class,"add"]);
+    Route::post('editpop', [DataPopController::class,"update"]);
+    
+    //Jadwal PM
+    Route::get('jadwalpm', [JadwalPmController::class,"all"]);
+    Route::post('jadwalpm', [JadwalPmController::class,"add"]);
+    Route::post('editjadwalpm', [JadwalPmController::class,"update"]);
+    
 });
-
-//Data Pop
-Route::get('pop', [DataPopController::class, "all"]);
-Route::post('pop', [DataPopController::class, "add"]);
-Route::post('editpop', [DataPopController::class, "update"]);
