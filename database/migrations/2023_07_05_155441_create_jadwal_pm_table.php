@@ -19,7 +19,7 @@ class CreateJadwalPmTable extends Migration
             $table->foreignId('pop_id')->constrained('data_pop')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->string('status')->default('PLAN');
-            $table->boolean('status_approval')->default(false);
+            $table->string('status_approval')->default('WAITING');
             $table->timestamp('plan');
             $table->timestamp('realisasi');
             $table->string('jenis');

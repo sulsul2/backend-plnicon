@@ -6,12 +6,19 @@ use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
 use App\Models\JadwalPm;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
 class JadwalPmController extends Controller
 {
     function all(request $request){
         $jadwal_pm = JadwalPm::with(['datapop','user']);
+        return ResponseFormatter::success($jadwal_pm->get(), "Get Jadwal PM Successfully");
+    }
+
+    function getByUser(request $request){
+        $id = Auth::id();
+        $jadwal_pm = JadwalPm::with('datapop')->where('user_id',$id);
         return ResponseFormatter::success($jadwal_pm->get(), "Get Jadwal PM Successfully");
     }
 

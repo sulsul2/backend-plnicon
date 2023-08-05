@@ -13,16 +13,8 @@ class GensetController extends Controller
     function all(request $request)
     {
         $genset = Genset::with('dataPop');
-        return ResponseFormatter::success($genset->get(), "Get Genset Successfully");
-    }
-
-    function getByPop(request $request){
-        try{
-            $request->validate([
-                'pop_id' => 'required',
-            ]);
-
-            $genset = Genset::with('dataPop')->where('pop_id',$request->pop_id);
+        if($request->pop_id){
+            $genset->where('pop_id',$request->pop_id);
             if (!$genset) {
                 return ResponseFormatter::error(
                     null,
@@ -31,16 +23,8 @@ class GensetController extends Controller
                 );
             }
             return ResponseFormatter::success($genset->get(), "Get Genset by Pop Id Successfully");
-        }catch(ValidationException $error){
-            return ResponseFormatter::error(
-                [
-                    'message' => 'Something when wrong',
-                    'error' => array_values($error->errors())[0][0],
-                ],
-                'Get Genset Failed',
-                500,
-            );
         }
+        return ResponseFormatter::success($genset->get(), "Get Genset Successfully");
     }
 
     function add(request $request){

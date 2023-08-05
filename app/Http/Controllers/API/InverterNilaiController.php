@@ -13,6 +13,29 @@ class InverterNilaiController extends Controller
     function all(request $request)
     {
         $inverter_nilai = InverterNilai::with(['jadwalPm','inverter']);
+        if ($request->pm_id) {
+            $inverter_nilai->where('pm_id',$request->pm_id);
+            if (!$inverter_nilai) {
+                return ResponseFormatter::error(
+                    null,
+                    'Data not found',
+                    404
+                );
+            }
+            return ResponseFormatter::success($inverter_nilai->get(), "Get Inverter Nilai by Pop Id Successfully");
+        }
+        if($request->inverter_id){
+            $inverter_nilai->where('inverter_id',$request->inverter_id)->orderBy('id','DESC')->first();
+            if (!$inverter_nilai) {
+                return ResponseFormatter::error(
+                    null,
+                    'Data not found',
+                    404
+                );
+            }
+            return ResponseFormatter::success($inverter_nilai->get(), "Get Inverter Nilai by Inverter Id Successfully");
+        }
+
         return ResponseFormatter::success($inverter_nilai->get(), "Get Inverter Nilai Successfully");
     }
 
@@ -75,7 +98,7 @@ class InverterNilaiController extends Controller
                 'load' => $request->load,
                 'input_ac' => $request->input_ac,
                 'input_dc' => $request->input_dc,
-                'output_dc' => $request->kapasitas,
+                'output_dc' => $request->output_dc,
                 'mainfall' => $request->mainfall,
                 'hasil_uji' => $request->hasil_uji,
                 'temuan' => $request->temuan,

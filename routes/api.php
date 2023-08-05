@@ -81,12 +81,12 @@ Route::middleware('auth:sanctum')->group(function () {
 
     //Jadwal PM
     Route::get('jadwalpm', [JadwalPmController::class, "all"]);
+    Route::get('jadwalpm-user', [JadwalPmController::class, "getByUser"]);
     Route::post('jadwalpm', [JadwalPmController::class, "add"]);
     Route::post('edit-jadwalpm', [JadwalPmController::class, "update"]);
 
     //Inverter 
     Route::get('inverter', [InverterController::class, "all"]);
-    Route::get('inverter-pop', [InverterController::class, "getByPop"]);
     Route::post('inverter', [InverterController::class, "add"]);
     Route::post('edit-inverter', [InverterController::class, "update"]);
     
@@ -237,7 +237,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
     //genset
     Route::get('genset', [GensetController::class, "all"]);
-    Route::get('genset-pop', [GensetController::class, "getByPop"]);
     Route::post('genset', [GensetController::class, "add"]);
     Route::post('edit-genset', [GensetController::class, "update"]);
     

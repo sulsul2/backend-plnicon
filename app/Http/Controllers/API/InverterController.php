@@ -13,16 +13,8 @@ class InverterController extends Controller
     function all(request $request)
     {
         $inverter = Inverter::with('dataPop');
-        return ResponseFormatter::success($inverter->get(), "Get Inverter Successfully");
-    }
-
-    function getByPop(request $request){
-        try{
-            $request->validate([
-                'pop_id' => 'required',
-            ]);
-
-            $inverter = Inverter::with('dataPop')->where('pop_id',$request->pop_id);
+        if($request->pop_id){
+            $inverter->where('pop_id',$request->pop_id);
             if (!$inverter) {
                 return ResponseFormatter::error(
                     null,
@@ -31,16 +23,8 @@ class InverterController extends Controller
                 );
             }
             return ResponseFormatter::success($inverter->get(), "Get Inverter by Pop Id Successfully");
-        }catch(ValidationException $error){
-            return ResponseFormatter::error(
-                [
-                    'message' => 'Something when wrong',
-                    'error' => array_values($error->errors())[0][0],
-                ],
-                'Get Inverter Failed',
-                500,
-            );
         }
+        return ResponseFormatter::success($inverter->get(), "Get Inverter Successfully");
     }
 
     function add(request $request){
