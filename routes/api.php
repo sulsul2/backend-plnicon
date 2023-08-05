@@ -29,6 +29,8 @@ use App\Http\Controllers\API\RectController;
 use App\Http\Controllers\API\UserController;
 use App\Models\AirConditionerNilai;
 use App\Models\DataPerangkat;
+use App\Models\KwhMeter;
+use App\Models\KwhMeterNilai;
 use App\Models\Pdb;
 use App\Models\PerangkatFoto;
 use App\Models\PerangkatNilai;
@@ -206,4 +208,19 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('air-conditioner-foto', [AirConditionerFotoController::class, "all"]);
     Route::post('air-conditioner-foto', [AirConditionerFotoController::class, "add"]);
     Route::post('edit-air-conditioner-foto', [AirConditionerFotoController::class, "update"]);
+
+    // kwh meter
+    Route::get('kwh_meter', [KwhMeter::class, "all"]);
+    Route::post('kwh_meter', [KwhMeter::class, "add"]);
+    Route::post('kwh_meter', [KwhMeter::class, "update"]);
+
+    // kwh meter nilai
+    Route::get('kwh_meter_nilai', [KwhMeterNilai::class, "all"]);
+    Route::post('kwh_meter_nilai', [KwhMeterNilai::class, "add"]);
+    Route::post('kwh_meter_nilai', [KwhMeterNilai::class, "update"]);
+
+    // kwh meter foto
+    Route::get('kwh_foto', [KwhFoto::class, "all"]);
+    Route::post('kwh_foto', [KwhFoto::class, "add"]);
+    Route::post('kwh_foto', [KwhFoto::class, "update"]);
 });
