@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\API\AirConditionerController;
+use App\Http\Controllers\API\AirConditionerFotoController;
+use App\Http\Controllers\API\AirConditionerNilaiController;
 use App\Http\Controllers\API\BateraiNilaiController;
 use App\Http\Controllers\API\BateraiController;
 use App\Http\Controllers\API\TemuanController;
@@ -13,14 +16,20 @@ use App\Http\Controllers\API\InverterController;
 use App\Http\Controllers\API\InverterFotoController;
 use App\Http\Controllers\API\InverterNilaiController;
 use App\Http\Controllers\API\JadwalPmController;
+use App\Http\Controllers\API\McbController;
 use App\Http\Controllers\API\RectFotoController;
 use App\Http\Controllers\API\RectNilaiController;
 use App\Http\Controllers\API\UjiBateraiController;
 use App\Http\Controllers\API\ModulController;
 use App\Http\Controllers\API\NotifikasiController;
+use App\Http\Controllers\API\PdbController;
+use App\Http\Controllers\API\PdbFotoController;
+use App\Http\Controllers\API\PdbNilaiController;
 use App\Http\Controllers\API\RectController;
 use App\Http\Controllers\API\UserController;
+use App\Models\AirConditionerNilai;
 use App\Models\DataPerangkat;
+use App\Models\Pdb;
 use App\Models\PerangkatFoto;
 use App\Models\PerangkatNilai;
 use App\Models\Port;
@@ -161,4 +170,39 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('uji-baterai', [UjiBateraiController::class, "all"]);
     Route::post('uji-baterai', [UjiBateraiController::class, "add"]);
     Route::post('edit-uji-baterai', [UjiBateraiController::class, "update"]);
+    
+    // Pdb
+    Route::get('pdb', [PdbController::class, "all"]);
+    Route::post('pdb', [PdbController::class, "add"]);
+    Route::post('edit-pdb', [PdbController::class, "update"]);
+    
+    // Pdb Nilai
+    Route::get('pdb-nilai', [PdbNilaiController::class, "all"]);
+    Route::post('pdb-nilai', [PdbNilaiController::class, "add"]);
+    Route::post('edit-pdb-nilai', [PdbNilaiController::class, "update"]);
+    
+    // Mcb
+    Route::get('mcb', [McbController::class, "all"]);
+    Route::post('mcb', [McbController::class, "add"]);
+    Route::post('edit-mcb', [McbController::class, "update"]);
+    
+    // Pdb Foto
+    Route::get('pdb-foto', [PdbFotoController::class, "all"]);
+    Route::post('pdb-foto', [PdbFotoController::class, "add"]);
+    Route::post('edit-pdb-foto', [PdbFotoController::class, "update"]);
+    
+    // Air Conditioner
+    Route::get('air-conditioner', [AirConditionerController::class, "all"]);
+    Route::post('air-conditioner', [AirConditionerController::class, "add"]);
+    Route::post('edit-air-conditioner', [AirConditionerController::class, "update"]);
+    
+    // Air Conditioner Nilai
+    Route::get('air-conditioner-nilai', [AirConditionerNilaiController::class, "all"]);
+    Route::post('air-conditioner-nilai', [AirConditionerNilaiController::class, "add"]);
+    Route::post('edit-air-conditioner-nilai', [AirConditionerNilaiController::class, "update"]);
+    
+    // Air Conditioner Foto
+    Route::get('air-conditioner-foto', [AirConditionerFotoController::class, "all"]);
+    Route::post('air-conditioner-foto', [AirConditionerFotoController::class, "add"]);
+    Route::post('edit-air-conditioner-foto', [AirConditionerFotoController::class, "update"]);
 });

@@ -24,7 +24,7 @@ class RectFoto extends Model
 
     public function rect()
     {
-        return $this->belongsTo(Rect::class, 'rect_id', 'id');
+        return $this->belongsTo(RectNilai::class, 'rect_nilai_id', 'id');
     }
 
     public function getUrlAttribute($url)

@@ -4,47 +4,49 @@ namespace App\Http\Controllers\API;
 
 use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
-use App\Models\Inverter;
+use App\Models\AirConditioner;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
-class InverterController extends Controller
+class AirConditionerController extends Controller
 {
     function all(request $request)
     {
-        $inverter = Inverter::with('dataPop');
-        return ResponseFormatter::success($inverter->get(), "Get Inverter Successfully");
+        $air_conditioner = AirConditioner::with('dataPop');
+        return ResponseFormatter::success($air_conditioner->get(), "Get AirConditioner Successfully");
     }
 
     function add(request $request){
         try{
             $request->validate([
                 'pop_id' => 'required',
-                'sn' => 'required',
+                'nama' => 'required',
                 'kondisi' => 'required',
                 'merk' => 'required',
-                'tipe' => 'required',
                 'kapasitas' => 'required',
+                'tekanan_freon' => 'required',
+                'mode_hidup' => 'required',
                 'tgl_instalasi' => 'required',
             ]);
 
-            $inverter = Inverter::create([
+            $air_conditioner = AirConditioner::create([
                 'pop_id' => $request->pop_id,
-                'sn' => $request->sn,
+                'nama' => $request->nama,
                 'kondisi' => $request->kondisi,
                 'merk' => $request->merk,
-                'tipe' => $request->tipe,
                 'kapasitas' => $request->kapasitas,
+                'tekanan_freon' => $request->tekanan_freon,
+                'mode_hidup' => $request->mode_hidup,
                 'tgl_instalasi' => $request->tgl_instalasi,
             ]);
-            return ResponseFormatter::success($inverter, 'Create Data Inverter success');
+            return ResponseFormatter::success($air_conditioner, 'Create Data AirConditioner success');
         }catch(ValidationException $error){
             return ResponseFormatter::error(
                 [
                     'message' => 'Something when wrong',
                     'error' => array_values($error->errors())[0][0],
                 ],
-                'Add Inverter Failed',
+                'Add AirConditioner Failed',
                 500,
             );
         }
@@ -56,8 +58,8 @@ class InverterController extends Controller
                 'id' => 'required'
             ]);
 
-            $inverter = Inverter::find($request->id);
-            if (!$inverter) {
+            $air_conditioner = AirConditioner::find($request->id);
+            if (!$air_conditioner) {
                 return ResponseFormatter::error(
                     null,
                     'Data not found',
@@ -65,23 +67,24 @@ class InverterController extends Controller
                 );
             }
 
-            $inverter->update([
+            $air_conditioner->update([
                 'pop_id' => $request->pop_id,
-                'sn' => $request->sn,
+                'nama' => $request->nama,
                 'kondisi' => $request->kondisi,
                 'merk' => $request->merk,
-                'tipe' => $request->tipe,
                 'kapasitas' => $request->kapasitas,
+                'tekanan_freon' => $request->tekanan_freon,
+                'mode_hidup' => $request->mode_hidup,
                 'tgl_instalasi' => $request->tgl_instalasi,
             ]);
-            return ResponseFormatter::success($inverter, 'Edit Data Inverter success');
+            return ResponseFormatter::success($air_conditioner, 'Edit Data AirConditioner success');
         }catch(ValidationException $error){
             return ResponseFormatter::error(
                 [
                     'message' => 'Something when wrong',
                     'error' => array_values($error->errors())[0][0],
                 ],
-                'Add Inverter Failed',
+                'Add AirConditioner Failed',
                 500,
             );
         }

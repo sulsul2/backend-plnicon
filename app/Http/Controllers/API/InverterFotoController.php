@@ -20,12 +20,15 @@ class InverterFotoController extends Controller
         try{
             $request->validate([
                 'inventer_nilai_id' => 'required',
-                'url' => 'required',
+                'fotoFile' => 'required',
             ]);
+
+            $fotoFile = $request->file('fotoFile');
+            $fotoPath = $fotoFile->storeAs('public/foto/inverter', 'inverter_' . date("Y_m_d_h_m_s", time()) . '.' . $fotoFile->extension());
 
             $inverter_foto = InverterFoto::create([
                 'inventer_nilai_id' => $request->inventer_nilai_id,
-                'url' => $request->url,
+                'url' => $fotoPath,
                 'deskripsi' => $request->deskripsi,
             ]);
             return ResponseFormatter::success($inverter_foto, 'Create Data Inverter Foto success');
@@ -56,9 +59,16 @@ class InverterFotoController extends Controller
                 );
             }
 
+            // hapus foto lama
+            unlink(public_path(str_replace(config('app.url'), '', $inverter_foto->url)));
+
+            // store foto baru
+            $fotoFile = $request->file('fotoFile');
+            $fotoPath = $fotoFile->storeAs('public/foto/inverter', 'inverter_' . date("Y_m_d_h_m_s", time()) . '.' . $fotoFile->extension());
+
             $inverter_foto->update([
                 'inventer_nilai_id' => $request->inventer_nilai_id,
-                'url' => $request->url,
+                'url' => $fotoPath,
                 'deskripsi' => $request->deskripsi,
             ]);
             return ResponseFormatter::success($inverter_foto, 'Edit Data Inverter Foto success');
