@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\API\BateraiNilaiController;
+use App\Http\Controllers\API\BateraiController;
 use App\Http\Controllers\API\TemuanController;
 use App\Http\Controllers\API\DataPopController;
+use App\Http\Controllers\API\DataRackController;
 use App\Http\Controllers\API\EnvironmentController;
 use App\Http\Controllers\API\EnvironmentFotoController;
 use App\Http\Controllers\API\ExAlarmController;
@@ -14,7 +16,14 @@ use App\Http\Controllers\API\JadwalPmController;
 use App\Http\Controllers\API\RectFotoController;
 use App\Http\Controllers\API\RectNilaiController;
 use App\Http\Controllers\API\UjiBateraiController;
+use App\Http\Controllers\API\ModulController;
+use App\Http\Controllers\API\NotifikasiController;
+use App\Http\Controllers\API\RectController;
 use App\Http\Controllers\API\UserController;
+use App\Models\DataPerangkat;
+use App\Models\PerangkatFoto;
+use App\Models\PerangkatNilai;
+use App\Models\Port;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -87,6 +96,51 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('ex-alarm-foto', [ExAlarmFotoController::class, "all"]);
     Route::post('ex-alarm-foto', [ExAlarmFotoController::class, "add"]);
     Route::post('edit-ex-alarm-foto', [ExAlarmFotoController::class, "update"]);
+
+    //Rect
+    Route::get('rect', [RectController::class, "all"]);
+    Route::post('rect', [RectController::class, "add"]);
+    Route::post('rect', [RectController::class, "update"]);
+
+    //Modul
+    Route::get('modul', [ModulController::class, "all"]);
+    Route::post('modul', [ModulController::class, "add"]);
+    Route::post('modul', [ModulController::class, "update"]);
+
+    //Baterai
+    Route::get('baterai', [BateraiController::class, "all"]);
+    Route::post('baterai', [BateraiController::class, "add"]);
+    Route::post('baterai', [BateraiController::class, "update"]);
+
+    //Notifikasi
+    Route::get('notifikasi', [NotifikasiController::class, "all"]);
+    Route::post('notifikasi', [NotifikasiController::class, "add"]);
+    Route::post('notifikasi', [NotifikasiController::class, "update"]);
+
+    //Data Rack
+    Route::get('data_rack', [DataRackController::class, "all"]);
+    Route::post('data_rack', [DataRackController::class, "add"]);
+    Route::post('data_rack', [DataRackController::class, "update"]);
+
+    //Data Perangkat
+    Route::get('data_perangkat', [DataPerangkat::class, "all"]);
+    Route::post('data_perangkat', [DataPerangkat::class, "add"]);
+    Route::post('data_perangkat', [DataPerangkat::class, "update"]);
+
+    //Perangkat Nilai
+    Route::get('perangkat_nilai', [PerangkatNilai::class, "all"]);
+    Route::post('perangkat_nilai', [PerangkatNilai::class, "add"]);
+    Route::post('perangkat_nilai', [PerangkatNilai::class, "update"]);
+
+    //Perangkat Foto
+    Route::get('perangkat_foto', [PerangkatFoto::class, "all"]);
+    Route::post('perangkat_foto', [PerangkatFoto::class, "add"]);
+    Route::post('perangkat_foto', [PerangkatFoto::class, "update"]);
+
+    //Port
+    Route::get('port', [Port::class, "all"]);
+    Route::post('port', [Port::class, "add"]);
+    Route::post('port', [Port::class, "update"]);
 
     //Rect Nilai
     Route::get('rect-nilai', [RectNilaiController::class, "all"]);
