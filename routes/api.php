@@ -54,6 +54,7 @@ Route::post('register', [UserController::class, 'register']);
 Route::middleware('auth:sanctum')->group(function () {
     // USER
     Route::get('user', [UserController::class, 'get']);
+    Route::get('all-user', [UserController::class, 'all']);
     Route::post('logout', [UserController::class, 'logout']);
 
     // Temuan

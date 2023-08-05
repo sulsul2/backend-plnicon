@@ -106,6 +106,11 @@ class UserController extends Controller
         return ResponseFormatter::success($user, 'Get user data success');
     }
 
+    public function all(request $request){
+        $user = User::all();
+        return ResponseFormatter::success($user, 'Get all user data success');
+    }
+
     public function logout(Request $request)
     {
         try {
