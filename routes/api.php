@@ -5,6 +5,7 @@ use App\Http\Controllers\API\AirConditionerFotoController;
 use App\Http\Controllers\API\AirConditionerNilaiController;
 use App\Http\Controllers\API\BateraiNilaiController;
 use App\Http\Controllers\API\BateraiController;
+use App\Http\Controllers\API\DataPerangkatController;
 use App\Http\Controllers\API\TemuanController;
 use App\Http\Controllers\API\DataPopController;
 use App\Http\Controllers\API\DataRackController;
@@ -12,10 +13,16 @@ use App\Http\Controllers\API\EnvironmentController;
 use App\Http\Controllers\API\EnvironmentFotoController;
 use App\Http\Controllers\API\ExAlarmController;
 use App\Http\Controllers\API\ExAlarmFotoController;
+use App\Http\Controllers\API\GensetController;
+use App\Http\Controllers\API\GensetFotoController;
+use App\Http\Controllers\API\GensetNilaiController;
 use App\Http\Controllers\API\InverterController;
 use App\Http\Controllers\API\InverterFotoController;
 use App\Http\Controllers\API\InverterNilaiController;
 use App\Http\Controllers\API\JadwalPmController;
+use App\Http\Controllers\API\KwhFotoController;
+use App\Http\Controllers\API\KwhMeterController;
+use App\Http\Controllers\API\KwhMeterNilaiController;
 use App\Http\Controllers\API\McbController;
 use App\Http\Controllers\API\RectFotoController;
 use App\Http\Controllers\API\RectNilaiController;
@@ -25,6 +32,9 @@ use App\Http\Controllers\API\NotifikasiController;
 use App\Http\Controllers\API\PdbController;
 use App\Http\Controllers\API\PdbFotoController;
 use App\Http\Controllers\API\PdbNilaiController;
+use App\Http\Controllers\API\PerangkatFotoController;
+use App\Http\Controllers\API\PerangkatNilaiController;
+use App\Http\Controllers\API\PortController;
 use App\Http\Controllers\API\RectController;
 use App\Http\Controllers\API\UserController;
 use App\Models\AirConditionerNilai;
@@ -76,29 +86,30 @@ Route::middleware('auth:sanctum')->group(function () {
 
     //Inverter 
     Route::get('inverter', [InverterController::class, "all"]);
+    Route::get('inverter-pop', [InverterController::class, "getByPop"]);
     Route::post('inverter', [InverterController::class, "add"]);
     Route::post('edit-inverter', [InverterController::class, "update"]);
-
+    
     //Inverter Nilai
     Route::get('inverter-nilai', [InverterNilaiController::class, "all"]);
     Route::post('inverter-nilai', [InverterNilaiController::class, "add"]);
     Route::post('edit-inverter-nilai', [InverterNilaiController::class, "update"]);
-
+    
     //Inverter foto
     Route::get('inverter-foto', [InverterFotoController::class, "all"]);
     Route::post('inverter-foto', [InverterFotoController::class, "add"]);
     Route::post('edit-inverter-foto', [InverterFotoController::class, "update"]);
-
+    
     //Environment
     Route::get('environment', [EnvironmentController::class, "all"]);
     Route::post('environment', [EnvironmentController::class, "add"]);
     Route::post('edit-environment', [EnvironmentController::class, "update"]);
-
+    
     //Environment Foto
     Route::get('environment-foto', [EnvironmentFotoController::class, "all"]);
     Route::post('environment-foto', [EnvironmentFotoController::class, "add"]);
     Route::post('edit-environment-foto', [EnvironmentFotoController::class, "update"]);
-
+    
     //Ex Alarm
     Route::get('ex-alarm', [ExAlarmController::class, "all"]);
     Route::post('ex-alarm', [ExAlarmController::class, "add"]);
@@ -113,62 +124,62 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('rect', [RectController::class, "all"]);
     Route::post('rect', [RectController::class, "add"]);
     Route::post('rect', [RectController::class, "update"]);
-
+    
     //Modul
     Route::get('modul', [ModulController::class, "all"]);
     Route::post('modul', [ModulController::class, "add"]);
     Route::post('modul', [ModulController::class, "update"]);
-
+    
     //Baterai
     Route::get('baterai', [BateraiController::class, "all"]);
     Route::post('baterai', [BateraiController::class, "add"]);
     Route::post('baterai', [BateraiController::class, "update"]);
-
+    
     //Notifikasi
     Route::get('notifikasi', [NotifikasiController::class, "all"]);
     Route::post('notifikasi', [NotifikasiController::class, "add"]);
     Route::post('notifikasi', [NotifikasiController::class, "update"]);
-
+    
     //Data Rack
     Route::get('data_rack', [DataRackController::class, "all"]);
     Route::post('data_rack', [DataRackController::class, "add"]);
     Route::post('data_rack', [DataRackController::class, "update"]);
-
+    
     //Data Perangkat
-    Route::get('data_perangkat', [DataPerangkat::class, "all"]);
-    Route::post('data_perangkat', [DataPerangkat::class, "add"]);
-    Route::post('data_perangkat', [DataPerangkat::class, "update"]);
-
+    Route::get('data_perangkat', [DataPerangkatController::class, "all"]);
+    Route::post('data_perangkat', [DataPerangkatController::class, "add"]);
+    Route::post('data_perangkat', [DataPerangkatController::class, "update"]);
+    
     //Perangkat Nilai
-    Route::get('perangkat_nilai', [PerangkatNilai::class, "all"]);
-    Route::post('perangkat_nilai', [PerangkatNilai::class, "add"]);
-    Route::post('perangkat_nilai', [PerangkatNilai::class, "update"]);
-
+    Route::get('perangkat_nilai', [PerangkatNilaiController::class, "all"]);
+    Route::post('perangkat_nilai', [PerangkatNilaiController::class, "add"]);
+    Route::post('perangkat_nilai', [PerangkatNilaiController::class, "update"]);
+    
     //Perangkat Foto
-    Route::get('perangkat_foto', [PerangkatFoto::class, "all"]);
-    Route::post('perangkat_foto', [PerangkatFoto::class, "add"]);
-    Route::post('perangkat_foto', [PerangkatFoto::class, "update"]);
+    Route::get('perangkat_foto', [PerangkatFotoController::class, "all"]);
+    Route::post('perangkat_foto', [PerangkatFotoController::class, "add"]);
+    Route::post('perangkat_foto', [PerangkatFotoController::class, "update"]);
 
     //Port
-    Route::get('port', [Port::class, "all"]);
-    Route::post('port', [Port::class, "add"]);
-    Route::post('port', [Port::class, "update"]);
-
+    Route::get('port', [PortController::class, "all"]);
+    Route::post('port', [PortController::class, "add"]);
+    Route::post('port', [PortController::class, "update"]);
+    
     //Rect Nilai
     Route::get('rect-nilai', [RectNilaiController::class, "all"]);
     Route::post('rect-nilai', [RectNilaiController::class, "add"]);
     Route::post('edit-rect-nilai', [RectNilaiController::class, "update"]);
-
+    
     //Rect Foto
     Route::get('rect-foto', [RectFotoController::class, "all"]);
     Route::post('rect-foto', [RectFotoController::class, "add"]);
     Route::post('edit-rect-foto', [RectFotoController::class, "update"]);
-
+    
     //Baterai Nilai
     Route::get('baterai-nilai', [BateraiNilaiController::class, "all"]);
     Route::post('baterai-nilai', [BateraiNilaiController::class, "add"]);
     Route::post('edit-baterai-nilai', [BateraiNilaiController::class, "update"]);
-
+    
     // Uji Baterai
     Route::get('uji-baterai', [UjiBateraiController::class, "all"]);
     Route::post('uji-baterai', [UjiBateraiController::class, "add"]);
@@ -208,19 +219,35 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('air-conditioner-foto', [AirConditionerFotoController::class, "all"]);
     Route::post('air-conditioner-foto', [AirConditionerFotoController::class, "add"]);
     Route::post('edit-air-conditioner-foto', [AirConditionerFotoController::class, "update"]);
-
+    
     // kwh meter
-    Route::get('kwh_meter', [KwhMeter::class, "all"]);
-    Route::post('kwh_meter', [KwhMeter::class, "add"]);
-    Route::post('kwh_meter', [KwhMeter::class, "update"]);
-
+    Route::get('kwh-meter', [KwhMeterController::class, "all"]);
+    Route::post('kwh-meter', [KwhMeterController::class, "add"]);
+    Route::post('edit-kwh-meter', [KwhMeterController::class, "update"]);
+    
     // kwh meter nilai
-    Route::get('kwh_meter_nilai', [KwhMeterNilai::class, "all"]);
-    Route::post('kwh_meter_nilai', [KwhMeterNilai::class, "add"]);
-    Route::post('kwh_meter_nilai', [KwhMeterNilai::class, "update"]);
-
+    Route::get('kwh-meter-nilai', [KwhMeterNilaiController::class, "all"]);
+    Route::post('kwh-meter-nilai', [KwhMeterNilaiController::class, "add"]);
+    Route::post('edit-kwh-meter-nilai', [KwhMeterNilaiController::class, "update"]);
+    
     // kwh meter foto
-    Route::get('kwh_foto', [KwhFoto::class, "all"]);
-    Route::post('kwh_foto', [KwhFoto::class, "add"]);
-    Route::post('kwh_foto', [KwhFoto::class, "update"]);
+    Route::get('kwh-foto', [KwhFotoController::class, "all"]);
+    Route::post('kwh-foto', [KwhFotoController::class, "add"]);
+    Route::post('edit-kwh-foto', [KwhFotoController::class, "update"]);
+
+    //genset
+    Route::get('genset', [GensetController::class, "all"]);
+    Route::get('genset-pop', [GensetController::class, "getByPop"]);
+    Route::post('genset', [GensetController::class, "add"]);
+    Route::post('edit-genset', [GensetController::class, "update"]);
+    
+    //genset nilai
+    Route::get('genset-nilai', [GensetNilaiController::class, "all"]);
+    Route::post('genset-nilai', [GensetNilaiController::class, "add"]);
+    Route::post('edit-genset-nilai', [GensetNilaiController::class, "update"]);
+    
+    //genset foto
+    Route::get('genset-foto', [GensetFotoController::class, "all"]);
+    Route::post('genset-foto', [GensetFotoController::class, "add"]);
+    Route::post('edit-genset-foto', [GensetFotoController::class, "update"]);
 });

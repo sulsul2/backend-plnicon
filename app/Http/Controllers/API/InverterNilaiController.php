@@ -35,7 +35,7 @@ class InverterNilaiController extends Controller
                 'load' => $request->load,
                 'input_ac' => $request->input_ac,
                 'input_dc' => $request->input_dc,
-                'output_dc' => $request->kapasitas,
+                'output_dc' => $request->output_dc,
                 'mainfall' => $request->mainfall,
                 'hasil_uji' => $request->hasil_uji,
                 'temuan' => $request->temuan,
