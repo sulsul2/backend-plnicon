@@ -16,6 +16,7 @@ class CreateUjiBateraiTable extends Migration
         Schema::create('uji_baterai', function (Blueprint $table) {
             $table->id();
             $table->foreignId('baterai_id')->constrained('baterai')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('pm_id')->constrained('jadwal_pm')->onDelete('cascade')->onUpdate('cascade');
             $table->string('jenis_uji');
             $table->string('interval')->nullable();
             $table->float('t0')->nullable();

@@ -16,6 +16,7 @@ class CreateBateraiNilaiTable extends Migration
         Schema::create('baterai_nilai', function (Blueprint $table) {
             $table->id();
             $table->foreignId('baterai_id')->constrained('baterai')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('pm_id')->constrained('jadwal_pm')->onDelete('cascade')->onUpdate('cascade');
             $table->float('load');
             $table->float('group_vbank');
             $table->float('cell_v1');

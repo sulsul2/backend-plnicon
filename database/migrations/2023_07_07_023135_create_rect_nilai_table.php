@@ -16,6 +16,7 @@ class CreateRectNilaiTable extends Migration
         Schema::create('rect_nilai', function (Blueprint $table) {
             $table->id();
             $table->foreignId('rect_id')->constrained('rect')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('pm_id')->constrained('jadwal_pm')->onDelete('cascade')->onUpdate('cascade');
             $table->float('loadr')->nullable();
             $table->float('loads')->nullable();
             $table->float('loadt')->nullable();

@@ -15,7 +15,7 @@ class CreateRectFotoTable extends Migration
     {
         Schema::create('rect_foto', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('rect_id')->constrained('rect')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('rect_nilai_id')->constrained('rect_nilai')->onDelete('cascade')->onUpdate('cascade');
             $table->string('url');
             $table->string('deskripsi')->nullable();
             $table->timestamps();
