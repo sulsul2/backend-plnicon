@@ -24,4 +24,8 @@ class PdbNilai extends Model
     public function pdb(){
         return $this->belongsTo(Pdb::class,'pdb_id','id');
     }
+
+    public function foto(){
+        return $this->hasMany(PdbFoto::class,'pdb_nilai_id','id');
+    }
 }

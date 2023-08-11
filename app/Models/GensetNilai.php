@@ -24,4 +24,8 @@ class GensetNilai extends Model
     public function genset() {
         return $this->belongsTo(Genset::class,'genset_id','id');
     }
+
+    public function foto(){
+        return $this->hasMany(GensetFoto::class,'genset_nilai_id','id');
+    }
 }

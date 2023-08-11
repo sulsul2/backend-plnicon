@@ -24,4 +24,8 @@ class KwhMeterNilai extends Model
     public function jadwalpm(){
         return $this->belongsTo(JadwalPm::class,'pm_id','id');
     }
+    
+    public function foto(){
+        return $this->hasMany(KwhFoto::class,'kwh_nilai_id','id');
+    }
 }

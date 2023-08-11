@@ -36,6 +36,7 @@ class GensetNilaiController extends Controller
                 'outdoor_clean' => 'required',
             ]);
 
+            $fotoPath = null;
             if($request->file('kartu_gantung_url')){
                 $fotoFile = $request->file('fotoFile');
                 $fotoPath = $fotoFile->storeAs('public/foto/genset', 'kartugantung_' . date("Y_m_d_h_m_s", time()) . '.' . $fotoFile->extension());

@@ -30,4 +30,8 @@ class RectNilai extends Model
     {
         return $this->belongsTo(JadwalPm::class, 'pm_id', 'id');
     }
+
+    public function foto(){
+        return $this->hasMany(RectFoto::class,'rect_nilai_id','id');
+    }
 }

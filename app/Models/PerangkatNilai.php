@@ -24,4 +24,8 @@ class PerangkatNilai extends Model
     public function dataperangkat(){
         return $this->belongsTo(DataPerangkat::class,'perangkat_id','id');
     }
+
+    public function foto(){
+        return $this->hasMany(PerangkatFoto::class,'perangkat_nilai_id','id');
+    }
 }

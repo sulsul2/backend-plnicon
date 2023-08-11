@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class InverterFoto extends Model
 {
@@ -19,5 +20,10 @@ class InverterFoto extends Model
 
     public function inverterNilai() {
         return $this->belongsTo(InverterNilai::class,'inventer_nilai_id','id');
+    }
+
+    public function getUrlAttribute($url)
+    {
+        return config('app.url') . Storage::url($url);
     }
 }

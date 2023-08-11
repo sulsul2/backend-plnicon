@@ -13,6 +13,17 @@ class JadwalPmController extends Controller
 {
     function all(request $request){
         $jadwal_pm = JadwalPm::with(['datapop','user']);
+        if($request->id){
+            $jadwal = JadwalPm::with(['genset.foto','inverter.foto','kwh.foto','ac.foto','pdb.foto','environment.foto','ex_alarm.foto','rect.foto','perangkat.foto','baterai.foto'])->where('id',$request->id);
+            if (!$jadwal) {
+                return ResponseFormatter::error(
+                    null,
+                    'Data not found',
+                    404
+                );
+            }
+            return ResponseFormatter::success($jadwal->get(), "Get Jadwal PM Successfully");
+        }
         return ResponseFormatter::success($jadwal_pm->get(), "Get Jadwal PM Successfully");
     }
 

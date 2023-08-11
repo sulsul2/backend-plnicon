@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class KwhFoto extends Model
 {
@@ -19,5 +20,10 @@ class KwhFoto extends Model
 
     public function kwhnilai(){
         return $this->belongsTo(KwhMeterNilai::class,'kwh_nilai_id','id');
+    }
+
+    public function getUrlAttribute($url)
+    {
+        return config('app.url') . Storage::url($url);
     }
 }

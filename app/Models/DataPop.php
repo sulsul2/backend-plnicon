@@ -16,4 +16,38 @@ class DataPop extends Model
         'created_at',
         'updated_at',
     ];
+
+    public function pm(){
+        return $this->hasMany(JadwalPm::class,'pop_id','id');
+    }
+    public function genset(){
+        return $this->hasMany(Genset::class,'pop_id','id');
+    }
+    public function inverter(){
+        return $this->hasMany(Inverter::class,'pop_id','id');
+    }
+    public function kwh(){
+        return $this->hasMany(KwhMeter::class,'pop_id','id');
+    }
+    public function environment(){
+        return $this->hasMany(Environment::class,'pop_id','id');
+    }
+    public function ex_alarm(){
+        return $this->hasMany(ExAlarm::class,'pop_id','id');
+    }
+    public function pdb(){
+        return $this->hasMany(Pdb::class,'pop_id','id');
+    }
+    public function ac(){
+        return $this->hasMany(AirConditioner::class,'pop_id','id');
+    }
+    public function rect(){
+        return $this->hasMany(Rect::class,'pop_id','id');
+    }
+    // public function perangkat(){
+    //     return $this->hasMany(Perangkat::class,'pop_id','id');
+    // }
+    // public function baterai(){
+    //     return $this->hasMany(Baterai::class,'pop_id','id');
+    // }
 }

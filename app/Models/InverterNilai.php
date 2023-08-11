@@ -24,4 +24,8 @@ class InverterNilai extends Model
     public function inverter() {
         return $this->belongsTo(Inverter::class,'inverter_id','id');
     }
+
+    public function foto(){
+        return $this->hasMany(InverterFoto::class,'inverter_nilai_id','id');
+    }
 }

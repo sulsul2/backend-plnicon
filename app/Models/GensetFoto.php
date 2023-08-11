@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class GensetFoto extends Model
 {
@@ -19,5 +20,10 @@ class GensetFoto extends Model
 
     public function gensetNilai() {
         return $this->belongsTo(GensetNilai::class,'genset_nilai_id','id');
+    }
+
+    public function getUrlAttribute($url)
+    {
+        return config('app.url') . Storage::url($url);
     }
 }

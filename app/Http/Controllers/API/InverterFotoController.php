@@ -19,7 +19,7 @@ class InverterFotoController extends Controller
     function add(request $request){
         try{
             $request->validate([
-                'inventer_nilai_id' => 'required',
+                'inverter_nilai_id' => 'required',
                 'fotoFile' => 'required',
             ]);
 
@@ -27,7 +27,7 @@ class InverterFotoController extends Controller
             $fotoPath = $fotoFile->storeAs('public/foto/inverter', 'inverter_' . date("Y_m_d_h_m_s", time()) . '.' . $fotoFile->extension());
 
             $inverter_foto = InverterFoto::create([
-                'inventer_nilai_id' => $request->inventer_nilai_id,
+                'inverter_nilai_id' => $request->inverter_nilai_id,
                 'url' => $fotoPath,
                 'deskripsi' => $request->deskripsi,
             ]);
@@ -67,7 +67,7 @@ class InverterFotoController extends Controller
             $fotoPath = $fotoFile->storeAs('public/foto/inverter', 'inverter_' . date("Y_m_d_h_m_s", time()) . '.' . $fotoFile->extension());
 
             $inverter_foto->update([
-                'inventer_nilai_id' => $request->inventer_nilai_id,
+                'inverter_nilai_id' => $request->inverter_nilai_id,
                 'url' => $fotoPath,
                 'deskripsi' => $request->deskripsi,
             ]);

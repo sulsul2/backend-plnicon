@@ -30,4 +30,8 @@ class Environment extends Model
     {
         return $this->belongsTo(DataPop::class, 'pop_id', 'id');
     }
+
+    public function foto(){
+        return $this->hasMany(EnvironmentFoto::class,'env_id','id');
+    }
 }

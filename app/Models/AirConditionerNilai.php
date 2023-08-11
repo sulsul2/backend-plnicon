@@ -24,4 +24,8 @@ class AirConditionerNilai extends Model
     public function airConditioner() {
         return $this->belongsTo(AirConditioner::class,'ac_id','id');
     }
+
+    public function foto(){
+        return $this->hasMany(AirConditionerFoto::class,'ac_nilai_id','id');
+    }
 }

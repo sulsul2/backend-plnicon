@@ -13,6 +13,17 @@ class DataPopController extends Controller
     function all(request $request)
     {
         $data_pop = DataPop::all();
+        if($request->id){
+            $data = DataPop::with(['genset','inverter','kwh','ac','pdb','environment','ex_alarm','rect'])->where('id',$request->id);
+            if (!$data) {
+                return ResponseFormatter::error(
+                    null,
+                    'Data not found',
+                    404
+                );
+            }
+            return ResponseFormatter::success($data->get(), "Get Data POP Successfully");
+        }
         return ResponseFormatter::success($data_pop, 'Get Data POP Successfully');
     }
 
