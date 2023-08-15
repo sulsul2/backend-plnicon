@@ -32,6 +32,6 @@ class ExAlarm extends Model
     }
 
     public function foto(){
-        return $this->hasMany(ExAlarmFoto::class,'env_id','id');
+        return $this->hasMany(ExAlarmFoto::class,'ex_alarm_id','id');
     }
 }

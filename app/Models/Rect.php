@@ -20,4 +20,10 @@ class Rect extends Model
     public function datapop(){
         return $this->belongsTo(DataPop::class,'pop_id','id');
     }
+    public function baterai(){
+        return $this->hasMany(Baterai::class,'rect_id','id');
+    }
+    public function modul(){
+        return $this->hasMany(Modul::class,'rect_id','id');
+    }
 }

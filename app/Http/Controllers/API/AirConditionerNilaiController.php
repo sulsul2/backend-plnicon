@@ -12,7 +12,7 @@ class AirConditionerNilaiController extends Controller
 {
     function all(request $request)
     {
-        $ac_nilai = AirConditionerNilai::with(['jadwalPm','airConditioner']);
+        $ac_nilai = AirConditionerNilai::with(['jadwalPm','airConditioner','foto']);
         return ResponseFormatter::success($ac_nilai->get(), "Get Air Conditioner Nilai Successfully");
     }
 

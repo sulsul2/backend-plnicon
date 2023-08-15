@@ -12,7 +12,7 @@ class DataRackController extends Controller
 {
     function all(request $request){
         $data_rack = DataRack::with('datapop');
-        return ResponseFormatter::success($data_rack->get(), "Get Jadwal PM Successfully");
+        return ResponseFormatter::success($data_rack->get(), "Get Data Rack Successfully");
     }
 
     function add(request $request){

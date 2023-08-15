@@ -44,10 +44,7 @@ class DataPop extends Model
     public function rect(){
         return $this->hasMany(Rect::class,'pop_id','id');
     }
-    // public function perangkat(){
-    //     return $this->hasMany(Perangkat::class,'pop_id','id');
-    // }
-    // public function baterai(){
-    //     return $this->hasMany(Baterai::class,'pop_id','id');
-    // }
+    public function rack(){
+        return $this->hasMany(DataRack::class,'pop_id','id');
+    }
 }

@@ -12,7 +12,7 @@ class ExAlarmController extends Controller
 {
     function all(request $request)
     {
-        $ex_alarm = ExAlarm::with(['jadwalPm','dataPop']);
+        $ex_alarm = ExAlarm::with(['jadwalPm','dataPop','foto']);
         return ResponseFormatter::success($ex_alarm->get(), "Get Ex Alarm Successfully");
     }
 
@@ -37,7 +37,7 @@ class ExAlarmController extends Controller
                 'ea' => $request->ea,
                 'suhu' => $request->suhu,
                 'pintu' => $request->pintu,
-                'pln_off' => $request->kapasitas,
+                'pln_off' => $request->pln_off,
                 'genset_run_fail' => $request->genset_run_fail,
                 'smokenfire' => $request->smokenfire,
                 'perangkat_ea' => $request->perangkat_ea,
@@ -79,7 +79,7 @@ class ExAlarmController extends Controller
                 'ea' => $request->ea,
                 'suhu' => $request->suhu,
                 'pintu' => $request->pintu,
-                'pln_off' => $request->kapasitas,
+                'pln_off' => $request->pln_off,
                 'genset_run_fail' => $request->genset_run_fail,
                 'smokenfire' => $request->smokenfire,
                 'perangkat_ea' => $request->perangkat_ea,

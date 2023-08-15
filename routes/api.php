@@ -123,47 +123,47 @@ Route::middleware('auth:sanctum')->group(function () {
     //Rect
     Route::get('rect', [RectController::class, "all"]);
     Route::post('rect', [RectController::class, "add"]);
-    Route::post('rect', [RectController::class, "update"]);
+    Route::post('edit-rect', [RectController::class, "update"]);
     
     //Modul
     Route::get('modul', [ModulController::class, "all"]);
     Route::post('modul', [ModulController::class, "add"]);
-    Route::post('modul', [ModulController::class, "update"]);
+    Route::post('edit-modul', [ModulController::class, "update"]);
     
     //Baterai
     Route::get('baterai', [BateraiController::class, "all"]);
     Route::post('baterai', [BateraiController::class, "add"]);
-    Route::post('baterai', [BateraiController::class, "update"]);
+    Route::post('edit-baterai', [BateraiController::class, "update"]);
     
     //Notifikasi
     Route::get('notifikasi', [NotifikasiController::class, "all"]);
     Route::post('notifikasi', [NotifikasiController::class, "add"]);
-    Route::post('notifikasi', [NotifikasiController::class, "update"]);
+    Route::post('edit-notifikasi', [NotifikasiController::class, "update"]);
     
     //Data Rack
-    Route::get('data_rack', [DataRackController::class, "all"]);
-    Route::post('data_rack', [DataRackController::class, "add"]);
-    Route::post('data_rack', [DataRackController::class, "update"]);
+    Route::get('data-rack', [DataRackController::class, "all"]);
+    Route::post('data-rack', [DataRackController::class, "add"]);
+    Route::post('edit-data-rack', [DataRackController::class, "update"]);
     
     //Data Perangkat
-    Route::get('data_perangkat', [DataPerangkatController::class, "all"]);
-    Route::post('data_perangkat', [DataPerangkatController::class, "add"]);
-    Route::post('data_perangkat', [DataPerangkatController::class, "update"]);
+    Route::get('data-perangkat', [DataPerangkatController::class, "all"]);
+    Route::post('data-perangkat', [DataPerangkatController::class, "add"]);
+    Route::post('edit-data-perangkat', [DataPerangkatController::class, "update"]);
     
     //Perangkat Nilai
-    Route::get('perangkat_nilai', [PerangkatNilaiController::class, "all"]);
-    Route::post('perangkat_nilai', [PerangkatNilaiController::class, "add"]);
-    Route::post('perangkat_nilai', [PerangkatNilaiController::class, "update"]);
+    Route::get('perangkat-nilai', [PerangkatNilaiController::class, "all"]);
+    Route::post('perangkat-nilai', [PerangkatNilaiController::class, "add"]);
+    Route::post('edit-perangkat-nilai', [PerangkatNilaiController::class, "update"]);
     
     //Perangkat Foto
-    Route::get('perangkat_foto', [PerangkatFotoController::class, "all"]);
-    Route::post('perangkat_foto', [PerangkatFotoController::class, "add"]);
-    Route::post('perangkat_foto', [PerangkatFotoController::class, "update"]);
+    Route::get('perangkat-foto', [PerangkatFotoController::class, "all"]);
+    Route::post('perangkat-foto', [PerangkatFotoController::class, "add"]);
+    Route::post('edit-perangkat-foto', [PerangkatFotoController::class, "update"]);
 
     //Port
     Route::get('port', [PortController::class, "all"]);
     Route::post('port', [PortController::class, "add"]);
-    Route::post('port', [PortController::class, "update"]);
+    Route::post('edit-port', [PortController::class, "update"]);
     
     //Rect Nilai
     Route::get('rect-nilai', [RectNilaiController::class, "all"]);

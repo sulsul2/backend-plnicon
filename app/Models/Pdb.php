@@ -17,7 +17,12 @@ class Pdb extends Model
         'updated_at',
     ];
 
-    public function dataPop() {
-        return $this->belongsTo(DataPop::class,'pop_id','id');
+    public function dataPop()
+    {
+        return $this->belongsTo(DataPop::class, 'pop_id', 'id');
+    }
+    public function mcb()
+    {
+        return $this->hasMany(Mcb::class, 'pdb_id', 'id');
     }
 }

@@ -12,7 +12,7 @@ class EnvironmentController extends Controller
 {
     function all(request $request)
     {
-        $environment = Environment::all();
+        $environment = Environment::with('foto');
         return ResponseFormatter::success($environment, 'Get Environment Successfully');
     }
 
