@@ -13,6 +13,17 @@ class AirConditionerNilaiController extends Controller
     function all(request $request)
     {
         $ac_nilai = AirConditionerNilai::with(['jadwalPm','airConditioner','foto']);
+        if ($request->pm_id && $request->ac_id) {
+            $ac_nilai->where('pm_id',$request->pm_id)->where('ac_id',$request->ac_id);
+            if (!$ac_nilai) {
+                return ResponseFormatter::error(
+                    null,
+                    'Data not found',
+                    404
+                );
+            }
+            return ResponseFormatter::success($ac_nilai->get(), "Get AC Nilai Successfully");
+        }
         return ResponseFormatter::success($ac_nilai->get(), "Get Air Conditioner Nilai Successfully");
     }
 
