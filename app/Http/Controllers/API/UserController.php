@@ -30,6 +30,7 @@ class UserController extends Controller
                 'username' => $request->username,
                 'password' => Hash::make($request->password),
                 'phone' => $request->phone,
+                'role' => $request->role,
             ]);
 
             $user = User::where('email', $request->email)->first();
