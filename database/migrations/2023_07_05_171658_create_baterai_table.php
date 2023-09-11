@@ -25,7 +25,7 @@ class CreateBateraiTable extends Migration
             $table->float('persentase');
             $table->float('vbatt');
             $table->timestamp('tgl_uji');
-            $table->timestamp('tgl_instalasi');
+            $table->timestamp('tgl_instalasi')->nullable();
             $table->timestamps();
         });
     }

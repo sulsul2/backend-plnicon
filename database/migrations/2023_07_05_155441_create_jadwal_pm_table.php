@@ -21,7 +21,7 @@ class CreateJadwalPmTable extends Migration
             $table->string('status')->default('PLAN');
             $table->string('status_approval')->default('WAITING');
             $table->timestamp('plan');
-            $table->timestamp('realisasi');
+            $table->timestamp('realisasi')->nullable();
             $table->string('jenis');
             $table->string('kategori');
             $table->string('detail_pm');
