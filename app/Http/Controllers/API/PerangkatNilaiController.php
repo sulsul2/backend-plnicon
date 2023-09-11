@@ -10,12 +10,25 @@ use Illuminate\Validation\ValidationException;
 
 class PerangkatNilaiController extends Controller
 {
-    function all(request $request){
-        $perangkat_nilai = PerangkatNilai::with(['jadwalpm','dataperangkat']);
+    function all(request $request)
+    {
+        $perangkat_nilai = PerangkatNilai::with(['jadwalpm', 'dataperangkat']);
+        if ($request->pm_id && $request->perangkat_id) {
+            $perangkat_nilai->where('pm_id', $request->pm_id)->where('perangkat_id', $request->perangkat_id)->first();
+            if (!$perangkat_nilai) {
+                return ResponseFormatter::error(
+                    null,
+                    'Data not found',
+                    404
+                );
+            }
+            return ResponseFormatter::success($perangkat_nilai, "Get Perangkat Nilai Successfully");
+        }
         return ResponseFormatter::success($perangkat_nilai->get(), "Get Perangkat Nilai Successfully");
     }
 
-    function add(request $request){
+    function add(request $request)
+    {
         try {
             $request->validate([
                 'pm_id' => 'required',
@@ -30,8 +43,7 @@ class PerangkatNilaiController extends Controller
                 'temuan' => $request->temuan,
                 'rekomendasi' => $request->rekomendasi,
             ]);
-            return ResponseFormatter::success($perangkat_nilai->load(['jadwalpm','dataperangkat']), "Create Perangkat Nilai Successfully");
-
+            return ResponseFormatter::success($perangkat_nilai->load(['jadwalpm', 'dataperangkat']), "Create Perangkat Nilai Successfully");
         } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
@@ -44,14 +56,15 @@ class PerangkatNilaiController extends Controller
         }
     }
 
-    function update(request $request){
+    function update(request $request)
+    {
         try {
             $request->validate([
                 'id' => 'required',
             ]);
 
             $perangkat_nilai = PerangkatNilai::find($request->id);
-            if(!$perangkat_nilai){
+            if (!$perangkat_nilai) {
                 return ResponseFormatter::error(
                     null,
                     'Data not found',
@@ -65,8 +78,7 @@ class PerangkatNilaiController extends Controller
                 'temuan' => $request->temuan,
                 'rekomendasi' => $request->rekomendasi,
             ]);
-            return ResponseFormatter::success($perangkat_nilai->load(['jadwalpm','dataperangkat']), "Edit Perangkat Nilai Successfully");
-
+            return ResponseFormatter::success($perangkat_nilai->load(['jadwalpm', 'dataperangkat']), "Edit Perangkat Nilai Successfully");
         } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [

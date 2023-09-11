@@ -10,12 +10,25 @@ use Illuminate\Validation\ValidationException;
 
 class KwhMeterNilaiController extends Controller
 {
-    function all(request $request){
-        $kwh_meter_nilai = KwhMeterNilai::with(['kwhmeter','jadwalpm']);
+    function all(request $request)
+    {
+        $kwh_meter_nilai = KwhMeterNilai::with(['kwhmeter', 'jadwalpm']);
+        if ($request->pm_id && $request->kwh_id) {
+            $kwh_meter_nilai->where('pm_id', $request->pm_id)->where('kwh_id', $request->kwh_id)->first();
+            if (!$kwh_meter_nilai) {
+                return ResponseFormatter::error(
+                    null,
+                    'Data not found',
+                    404
+                );
+            }
+            return ResponseFormatter::success($kwh_meter_nilai, "Get Kwh Nilai Successfully");
+        }
         return ResponseFormatter::success($kwh_meter_nilai->get(), "Get Kwh Meter Successfully");
     }
 
-    function add(request $request){
+    function add(request $request)
+    {
         try {
             $request->validate([
                 'kwh_id' => 'required',
@@ -38,8 +51,7 @@ class KwhMeterNilaiController extends Controller
                 'temuan' => $request->temuan,
                 'rekomendasi' => $request->rekomendasi,
             ]);
-            return ResponseFormatter::success($kwh_meter_nilai->load(['kwhmeter','jadwalpm']), "Create Kwh Meter Nilai Successfully");
-
+            return ResponseFormatter::success($kwh_meter_nilai->load(['kwhmeter', 'jadwalpm']), "Create Kwh Meter Nilai Successfully");
         } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
@@ -52,14 +64,15 @@ class KwhMeterNilaiController extends Controller
         }
     }
 
-    function update(request $request){
+    function update(request $request)
+    {
         try {
             $request->validate([
                 'id' => 'required',
             ]);
 
             $kwh_meter_nilai = KwhMeterNilai::find($request->id);
-            if(!$kwh_meter_nilai){
+            if (!$kwh_meter_nilai) {
                 return ResponseFormatter::error(
                     null,
                     'Data not found',
@@ -83,8 +96,7 @@ class KwhMeterNilaiController extends Controller
                 'temuan' => $request->temuan,
                 'rekomendasi' => $request->rekomendasi,
             ]);
-            return ResponseFormatter::success($kwh_meter_nilai->load(['kwhmeter','jadwalpm']), "Edit kwh meter nilai Successfully");
-
+            return ResponseFormatter::success($kwh_meter_nilai->load(['kwhmeter', 'jadwalpm']), "Edit kwh meter nilai Successfully");
         } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [

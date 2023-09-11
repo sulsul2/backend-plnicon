@@ -12,9 +12,9 @@ class InverterNilaiController extends Controller
 {
     function all(request $request)
     {
-        $inverter_nilai = InverterNilai::with(['jadwalPm','inverter']);
-        if ($request->pm_id) {
-            $inverter_nilai->where('pm_id',$request->pm_id);
+        $inverter_nilai = InverterNilai::with(['jadwalPm', 'inverter']);
+        if ($request->pm_id && $request->inverter_id) {
+            $inverter_nilai->where('pm_id', $request->pm_id)->where('inverter_id', $request->inverter_id)->first();
             if (!$inverter_nilai) {
                 return ResponseFormatter::error(
                     null,
@@ -22,25 +22,15 @@ class InverterNilaiController extends Controller
                     404
                 );
             }
-            return ResponseFormatter::success($inverter_nilai->get(), "Get Inverter Nilai by Pop Id Successfully");
-        }
-        if($request->inverter_id){
-            $inverter_nilai->where('inverter_id',$request->inverter_id)->orderBy('id','DESC')->first();
-            if (!$inverter_nilai) {
-                return ResponseFormatter::error(
-                    null,
-                    'Data not found',
-                    404
-                );
-            }
-            return ResponseFormatter::success($inverter_nilai->get(), "Get Inverter Nilai by Inverter Id Successfully");
+            return ResponseFormatter::success($inverter_nilai, "Get Inverter Nilai Successfully");
         }
 
         return ResponseFormatter::success($inverter_nilai->get(), "Get Inverter Nilai Successfully");
     }
 
-    function add(request $request){
-        try{
+    function add(request $request)
+    {
+        try {
             $request->validate([
                 'pm_id' => 'required',
                 'inverter_id' => 'required',
@@ -65,7 +55,7 @@ class InverterNilaiController extends Controller
                 'rekomendasi' => $request->rekomendasi,
             ]);
             return ResponseFormatter::success($inverter_nilai, 'Create Data Inverter Nilai success');
-        }catch(ValidationException $error){
+        } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
                     'message' => 'Something when wrong',
@@ -77,8 +67,9 @@ class InverterNilaiController extends Controller
         }
     }
 
-    function update(request $request){
-        try{
+    function update(request $request)
+    {
+        try {
             $request->validate([
                 'id' => 'required'
             ]);
@@ -105,7 +96,7 @@ class InverterNilaiController extends Controller
                 'rekomendasi' => $request->rekomendasi,
             ]);
             return ResponseFormatter::success($inverter_nilai, 'Edit Data Inverter Nilai success');
-        }catch(ValidationException $error){
+        } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
                     'message' => 'Something when wrong',

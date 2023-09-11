@@ -13,11 +13,15 @@ class PdbController extends Controller
     function all(request $request)
     {
         $pdb = Pdb::with('dataPop');
+        if ($request->tipe) {
+            $pdb->where('tipe', $request->tipe);
+        }
         return ResponseFormatter::success($pdb->get(), "Get Pdb Successfully");
     }
 
-    function add(request $request){
-        try{
+    function add(request $request)
+    {
+        try {
             $request->validate([
                 'pop_id' => 'required',
                 'nama' => 'required',
@@ -36,7 +40,7 @@ class PdbController extends Controller
                 'tgl_instalasi' => $request->tgl_instalasi,
             ]);
             return ResponseFormatter::success($pdb, 'Create Data Pdb success');
-        }catch(ValidationException $error){
+        } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
                     'message' => 'Something when wrong',
@@ -48,8 +52,9 @@ class PdbController extends Controller
         }
     }
 
-    function update(request $request){
-        try{
+    function update(request $request)
+    {
+        try {
             $request->validate([
                 'id' => 'required'
             ]);
@@ -72,7 +77,7 @@ class PdbController extends Controller
                 'tgl_instalasi' => $request->tgl_instalasi,
             ]);
             return ResponseFormatter::success($pdb, 'Edit Data Pdb success');
-        }catch(ValidationException $error){
+        } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
                     'message' => 'Something when wrong',

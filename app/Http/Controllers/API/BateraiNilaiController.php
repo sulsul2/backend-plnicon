@@ -13,6 +13,17 @@ class BateraiNilaiController extends Controller
     function all(request $request)
     {
         $baterai_nilai = BateraiNilai::with(['jadwalPm', 'baterai']);
+        if ($request->pm_id && $request->baterai_id) {
+            $baterai_nilai->where('pm_id', $request->pm_id)->where('baterai_id', $request->baterai_id)->first();
+            if (!$baterai_nilai) {
+                return ResponseFormatter::error(
+                    null,
+                    'Data not found',
+                    404
+                );
+            }
+            return ResponseFormatter::success($baterai_nilai, "Get Baterai Nilai Successfully");
+        }
         return ResponseFormatter::success($baterai_nilai->get(), "Get Baterai Nilai Successfully");
     }
 

@@ -12,12 +12,24 @@ class GensetNilaiController extends Controller
 {
     function all(request $request)
     {
-        $genset_nilai = GensetNilai::with(['jadwalPm','genset']);
+        $genset_nilai = GensetNilai::with(['jadwalPm', 'genset']);
+        if ($request->pm_id && $request->genset_id) {
+            $genset_nilai->where('pm_id', $request->pm_id)->where('genset_id', $request->genset_id)->first();
+            if (!$genset_nilai) {
+                return ResponseFormatter::error(
+                    null,
+                    'Data not found',
+                    404
+                );
+            }
+            return ResponseFormatter::success($genset_nilai, "Get Genset Nilai Successfully");
+        }
         return ResponseFormatter::success($genset_nilai->get(), "Get Genset Nilai Successfully");
     }
 
-    function add(request $request){
-        try{
+    function add(request $request)
+    {
+        try {
             $request->validate([
                 'pm_id' => 'required',
                 'genset_id' => 'required',
@@ -37,7 +49,7 @@ class GensetNilaiController extends Controller
             ]);
 
             $fotoPath = null;
-            if($request->file('kartu_gantung_url')){
+            if ($request->file('kartu_gantung_url')) {
                 $fotoFile = $request->file('fotoFile');
                 $fotoPath = $fotoFile->storeAs('public/foto/genset', 'kartugantung_' . date("Y_m_d_h_m_s", time()) . '.' . $fotoFile->extension());
             }
@@ -60,10 +72,10 @@ class GensetNilaiController extends Controller
                 'outdoor_clean' => $request->outdoor_clean,
                 'temuan' => $request->temuan,
                 'rekomendasi' => $request->rekomendasi,
-                'kartu_gantung_url'=>$fotoPath,
+                'kartu_gantung_url' => $fotoPath,
             ]);
             return ResponseFormatter::success($genset_nilai, 'Create Data Genset Nilai success');
-        }catch(ValidationException $error){
+        } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
                     'message' => 'Something when wrong',
@@ -75,8 +87,9 @@ class GensetNilaiController extends Controller
         }
     }
 
-    function update(request $request){
-        try{
+    function update(request $request)
+    {
+        try {
             $request->validate([
                 'id' => 'required'
             ]);
@@ -90,7 +103,7 @@ class GensetNilaiController extends Controller
                 );
             }
 
-            if($request->file('kartu_gantung_url')){
+            if ($request->file('kartu_gantung_url')) {
                 $fotoFile = $request->file('fotoFile');
                 $fotoPath = $fotoFile->storeAs('public/foto/genset', 'kartugantung_' . date("Y_m_d_h_m_s", time()) . '.' . $fotoFile->extension());
             }
@@ -113,10 +126,10 @@ class GensetNilaiController extends Controller
                 'outdoor_clean' => $request->outdoor_clean,
                 'temuan' => $request->temuan,
                 'rekomendasi' => $request->rekomendasi,
-                'kartu_gantung_url'=>$fotoPath,
+                'kartu_gantung_url' => $fotoPath,
             ]);
             return ResponseFormatter::success($genset_nilai, 'Edit Data Genset Nilai success');
-        }catch(ValidationException $error){
+        } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
                     'message' => 'Something when wrong',

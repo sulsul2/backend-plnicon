@@ -13,6 +13,17 @@ class RectNilaiController extends Controller
     function all(request $request)
     {
         $rect_nilai = RectNilai::with(['jadwalPm', 'rect']);
+        if ($request->pm_id && $request->rect_id) {
+            $rect_nilai->where('pm_id', $request->pm_id)->where('rect_id', $request->rect_id)->first();
+            if (!$rect_nilai) {
+                return ResponseFormatter::error(
+                    null,
+                    'Data not found',
+                    404
+                );
+            }
+            return ResponseFormatter::success($rect_nilai, "Get Kwh Nilai Successfully");
+        }
         return ResponseFormatter::success($rect_nilai->get(), "Get Nilai Rect Successfully");
     }
 

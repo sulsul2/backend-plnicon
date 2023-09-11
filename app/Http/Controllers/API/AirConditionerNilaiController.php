@@ -12,9 +12,9 @@ class AirConditionerNilaiController extends Controller
 {
     function all(request $request)
     {
-        $ac_nilai = AirConditionerNilai::with(['jadwalPm','airConditioner','foto']);
+        $ac_nilai = AirConditionerNilai::with(['jadwalPm', 'airConditioner', 'foto']);
         if ($request->pm_id && $request->ac_id) {
-            $ac_nilai->where('pm_id',$request->pm_id)->where('ac_id',$request->ac_id);
+            $ac_nilai->where('pm_id', $request->pm_id)->where('ac_id', $request->ac_id)->first();
             if (!$ac_nilai) {
                 return ResponseFormatter::error(
                     null,
@@ -22,13 +22,14 @@ class AirConditionerNilaiController extends Controller
                     404
                 );
             }
-            return ResponseFormatter::success($ac_nilai->get(), "Get AC Nilai Successfully");
+            return ResponseFormatter::success($ac_nilai, "Get AC Nilai Successfully");
         }
         return ResponseFormatter::success($ac_nilai->get(), "Get Air Conditioner Nilai Successfully");
     }
 
-    function add(request $request){
-        try{
+    function add(request $request)
+    {
+        try {
             $request->validate([
                 'pm_id' => 'required',
                 'ac_id' => 'required',
@@ -45,7 +46,7 @@ class AirConditionerNilaiController extends Controller
                 'rekomendasi' => $request->rekomendasi,
             ]);
             return ResponseFormatter::success($ac_nilai, 'Create Data Air Conditioner Nilai success');
-        }catch(ValidationException $error){
+        } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
                     'message' => 'Something when wrong',
@@ -57,8 +58,9 @@ class AirConditionerNilaiController extends Controller
         }
     }
 
-    function update(request $request){
-        try{
+    function update(request $request)
+    {
+        try {
             $request->validate([
                 'id' => 'required'
             ]);
@@ -81,7 +83,7 @@ class AirConditionerNilaiController extends Controller
                 'rekomendasi' => $request->rekomendasi,
             ]);
             return ResponseFormatter::success($ac_nilai, 'Edit Data Air Conditioner Nilai success');
-        }catch(ValidationException $error){
+        } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
                     'message' => 'Something when wrong',
