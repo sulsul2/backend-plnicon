@@ -22,7 +22,7 @@ class AirConditionerNilaiController extends Controller
                     404
                 );
             }
-            return ResponseFormatter::success($ac_nilai, "Get AC Nilai Successfully");
+            return ResponseFormatter::success($ac_nilai->get(), "Get AC Nilai Successfully");
         }
         return ResponseFormatter::success($ac_nilai->get(), "Get Air Conditioner Nilai Successfully");
     }

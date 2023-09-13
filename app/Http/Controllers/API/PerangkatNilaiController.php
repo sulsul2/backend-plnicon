@@ -22,7 +22,7 @@ class PerangkatNilaiController extends Controller
                     404
                 );
             }
-            return ResponseFormatter::success($perangkat_nilai, "Get Perangkat Nilai Successfully");
+            return ResponseFormatter::success($perangkat_nilai->get(), "Get Perangkat Nilai Successfully");
         }
         return ResponseFormatter::success($perangkat_nilai->get(), "Get Perangkat Nilai Successfully");
     }

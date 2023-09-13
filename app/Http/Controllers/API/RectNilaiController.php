@@ -22,7 +22,7 @@ class RectNilaiController extends Controller
                     404
                 );
             }
-            return ResponseFormatter::success($rect_nilai, "Get Kwh Nilai Successfully");
+            return ResponseFormatter::success($rect_nilai->get(), "Get Kwh Nilai Successfully");
         }
         return ResponseFormatter::success($rect_nilai->get(), "Get Nilai Rect Successfully");
     }

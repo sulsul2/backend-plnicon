@@ -22,7 +22,7 @@ class PdbNilaiController extends Controller
                     404
                 );
             }
-            return ResponseFormatter::success($pdb_nilai, "Get Pdb Nilai Successfully");
+            return ResponseFormatter::success($pdb_nilai->get(), "Get Pdb Nilai Successfully");
         }
         return ResponseFormatter::success($pdb_nilai->get(), "Get Pdb Nilai Successfully");
     }

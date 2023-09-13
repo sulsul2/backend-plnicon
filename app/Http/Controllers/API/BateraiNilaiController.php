@@ -22,7 +22,7 @@ class BateraiNilaiController extends Controller
                     404
                 );
             }
-            return ResponseFormatter::success($baterai_nilai, "Get Baterai Nilai Successfully");
+            return ResponseFormatter::success($baterai_nilai->get(), "Get Baterai Nilai Successfully");
         }
         return ResponseFormatter::success($baterai_nilai->get(), "Get Baterai Nilai Successfully");
     }

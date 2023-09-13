@@ -22,7 +22,7 @@ class InverterNilaiController extends Controller
                     404
                 );
             }
-            return ResponseFormatter::success($inverter_nilai, "Get Inverter Nilai Successfully");
+            return ResponseFormatter::success($inverter_nilai->get(), "Get Inverter Nilai Successfully");
         }
 
         return ResponseFormatter::success($inverter_nilai->get(), "Get Inverter Nilai Successfully");

@@ -22,7 +22,7 @@ class GensetNilaiController extends Controller
                     404
                 );
             }
-            return ResponseFormatter::success($genset_nilai, "Get Genset Nilai Successfully");
+            return ResponseFormatter::success($genset_nilai->get(), "Get Genset Nilai Successfully");
         }
         return ResponseFormatter::success($genset_nilai->get(), "Get Genset Nilai Successfully");
     }

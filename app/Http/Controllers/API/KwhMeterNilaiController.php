@@ -22,7 +22,7 @@ class KwhMeterNilaiController extends Controller
                     404
                 );
             }
-            return ResponseFormatter::success($kwh_meter_nilai, "Get Kwh Nilai Successfully");
+            return ResponseFormatter::success($kwh_meter_nilai->get(), "Get Kwh Nilai Successfully");
         }
         return ResponseFormatter::success($kwh_meter_nilai->get(), "Get Kwh Meter Successfully");
     }
