@@ -24,6 +24,8 @@ class CreateDataPopTable extends Migration
             $table->string('kota');
             $table->string('building');
             $table->string('tipe');
+            $table->string('wilayah');
+            $table->string('status');
             $table->timestamps();
         });
     }

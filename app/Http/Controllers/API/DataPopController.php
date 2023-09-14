@@ -15,7 +15,7 @@ class DataPopController extends Controller
     {
         $data_pop = DataPop::all();
         if ($request->id) {
-            $data = DataPop::with(['genset', 'inverter', 'kwh', 'ac', 'pdb.mcb', 'environment', 'ex_alarm', 'rect.baterai','rect.modul','rack.perangkat'])->where('id', $request->id);
+            $data = DataPop::with(['genset', 'inverter', 'kwh', 'ac', 'pdb.mcb', 'environment', 'ex_alarm', 'rect.baterai', 'rect.modul', 'rack.perangkat'])->where('id', $request->id);
             if (!$data) {
                 return ResponseFormatter::error(
                     null,
@@ -41,6 +41,8 @@ class DataPopController extends Controller
                 'kota' => 'required',
                 'building' => 'required',
                 'tipe' => 'required',
+                'wilayah' => 'required',
+                'status' => 'required',
             ]);
 
             $data_pop = DataPop::create([
@@ -53,6 +55,8 @@ class DataPopController extends Controller
                 'kota' => $request->kota,
                 'building' => $request->building,
                 'tipe' => $request->tipe,
+                'wilayah' => $request->wilayah,
+                'status' => $request->status,
             ]);
 
             $client = new Client();
@@ -64,43 +68,43 @@ class DataPopController extends Controller
             ];
 
             $body = ([
-                    'POPID' => $request->pop_kode,
-                    'POPNama' => $request->nama,
-                    'POPCoordinat' => $request->koordinat,
-                    'POPAddress' => $request->alamat,
-                    'kelurahan' => $request->kelurahan,
-                    'kecamatan' => $request->kecamatan,
-                    'POPKota' => $request->kota,
-                    'POPType' => $request->tipe,
-                    'POPCluster'=>'-',
-                    'POPFeeder' => 0,
-                    'POPPlanner' => 0,
-                    'POPConstruct' => '-',
-                    'CyberKey' => '-',
-                    'Perapihan' => '-',
-                    'PIC' => '-',
-                    'POPWilayah' => '-',
-                    'kawasan' => '-',
-                    'padlock'=>'-',
-                    'keymanual' => 0,
-                    'areahar' => '-',
-                    'popstat' => '-',
-                    'sdh' => 0,
-                    'dwdm' => 0,
-                    'L3' => 0,
-                    'kaki' => 0,
-                    'trunk_kota' => 0,
-                    'trunk_reg' => 0,
-                    'trunk_island' => 0,
-                    'trunk_intl' => 0,
-                    'bw_trunk_10g' => 0,
-                    'olt' => 0,
-                    'POPProject' => '-',
-                    'flagPm' => 0,
-                ]);
-                
-                $response = $client->request('POST', $url, [
-                    'body' => $body,
+                'POPID' => $request->pop_kode,
+                'POPNama' => $request->nama,
+                'POPCoordinat' => $request->koordinat,
+                'POPAddress' => $request->alamat,
+                'kelurahan' => $request->kelurahan,
+                'kecamatan' => $request->kecamatan,
+                'POPKota' => $request->kota,
+                'POPType' => $request->tipe,
+                'POPCluster' => '-',
+                'POPFeeder' => 0,
+                'POPPlanner' => 0,
+                'POPConstruct' => '-',
+                'CyberKey' => '-',
+                'Perapihan' => '-',
+                'PIC' => '-',
+                'POPWilayah' => '-',
+                'kawasan' => '-',
+                'padlock' => '-',
+                'keymanual' => 0,
+                'areahar' => '-',
+                'popstat' => '-',
+                'sdh' => 0,
+                'dwdm' => 0,
+                'L3' => 0,
+                'kaki' => 0,
+                'trunk_kota' => 0,
+                'trunk_reg' => 0,
+                'trunk_island' => 0,
+                'trunk_intl' => 0,
+                'bw_trunk_10g' => 0,
+                'olt' => 0,
+                'POPProject' => '-',
+                'flagPm' => 0,
+            ]);
+
+            $response = $client->request('POST', $url, [
+                'body' => $body,
                 'headers' => $headers,
                 'verify'  => false,
             ]);
@@ -155,16 +159,16 @@ class DataPopController extends Controller
             ];
 
             $body = ([
-                    'pop_kode' => $request->pop_kode,
-                    'nama' => $request->nama,
-                    'koordinat' => $request->koordinat,
-                    'alamat' => $request->alamat,
-                    'kelurahan' => $request->kelurahan,
-                    'kecamatan' => $request->kecamatan,
-                    'kota' => $request->kota,
-                    'building' => $request->building,
-                    'tipe' => $request->tipe,
-                ]);
+                'pop_kode' => $request->pop_kode,
+                'nama' => $request->nama,
+                'koordinat' => $request->koordinat,
+                'alamat' => $request->alamat,
+                'kelurahan' => $request->kelurahan,
+                'kecamatan' => $request->kecamatan,
+                'kota' => $request->kota,
+                'building' => $request->building,
+                'tipe' => $request->tipe,
+            ]);
 
             $response = $client->request('POST', $url, [
                 'body' => $body,
