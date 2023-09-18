@@ -89,4 +89,42 @@ class PdbFotoController extends Controller
             );
         }
     }
+
+    function delete(request $request)
+    {
+        try {
+            $request->validate([
+                'id' => 'required',
+            ]);
+
+            $pdb_foto = PdbFoto::find($request->id);
+
+            if (!$pdb_foto) {
+                return ResponseFormatter::error(
+                    [
+                        'message' => 'Something when wrong',
+                        'error' => "Data Not Found",
+                    ],
+                    'Delete Data pd$pdb_foto Failed',
+                    404,
+                );
+            }
+
+            $pdb_foto->forceDelete();
+
+            return ResponseFormatter::success(
+                null,
+                'Delete Data pd$pdb_foto Successfully'
+            );
+        } catch (ValidationException $error) {
+            return ResponseFormatter::error(
+                [
+                    'message' => 'Something when wrong',
+                    'error' => array_values($error->errors())[0][0],
+                ],
+                'Delete Data pd$pdb_foto Failed',
+                400,
+            );
+        }
+    }
 }

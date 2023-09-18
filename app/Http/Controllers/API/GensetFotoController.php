@@ -16,8 +16,9 @@ class GensetFotoController extends Controller
         return ResponseFormatter::success($genset_foto->get(), "Get Genset Foto Successfully");
     }
 
-    function add(request $request){
-        try{
+    function add(request $request)
+    {
+        try {
             $request->validate([
                 'genset_nilai_id' => 'required',
                 'fotoFile' => 'required',
@@ -32,7 +33,7 @@ class GensetFotoController extends Controller
                 'deskripsi' => $request->deskripsi,
             ]);
             return ResponseFormatter::success($genset_foto, 'Create Data Genset Foto success');
-        }catch(ValidationException $error){
+        } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
                     'message' => 'Something when wrong',
@@ -44,8 +45,9 @@ class GensetFotoController extends Controller
         }
     }
 
-    function update(request $request){
-        try{
+    function update(request $request)
+    {
+        try {
             $request->validate([
                 'id' => 'required'
             ]);
@@ -72,7 +74,7 @@ class GensetFotoController extends Controller
                 'deskripsi' => $request->deskripsi,
             ]);
             return ResponseFormatter::success($genset_foto, 'Edit Data Genset Foto success');
-        }catch(ValidationException $error){
+        } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
                     'message' => 'Something when wrong',
@@ -80,6 +82,44 @@ class GensetFotoController extends Controller
                 ],
                 'Add Genset Foto Failed',
                 500,
+            );
+        }
+    }
+
+    function delete(request $request)
+    {
+        try {
+            $request->validate([
+                'id' => 'required',
+            ]);
+
+            $genset_foto = GensetFoto::find($request->id);
+
+            if (!$genset_foto) {
+                return ResponseFormatter::error(
+                    [
+                        'message' => 'Something when wrong',
+                        'error' => "Data Not Found",
+                    ],
+                    'Delete Data genset_foto Failed',
+                    404,
+                );
+            }
+
+            $genset_foto->forceDelete();
+
+            return ResponseFormatter::success(
+                null,
+                'Delete Data genset_foto Successfully'
+            );
+        } catch (ValidationException $error) {
+            return ResponseFormatter::error(
+                [
+                    'message' => 'Something when wrong',
+                    'error' => array_values($error->errors())[0][0],
+                ],
+                'Delete Data genset_foto Failed',
+                400,
             );
         }
     }

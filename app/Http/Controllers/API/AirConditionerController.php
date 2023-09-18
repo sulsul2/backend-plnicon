@@ -16,8 +16,9 @@ class AirConditionerController extends Controller
         return ResponseFormatter::success($air_conditioner->get(), "Get AirConditioner Successfully");
     }
 
-    function add(request $request){
-        try{
+    function add(request $request)
+    {
+        try {
             $request->validate([
                 'pop_id' => 'required',
                 'nama' => 'required',
@@ -40,7 +41,7 @@ class AirConditionerController extends Controller
                 'tgl_instalasi' => $request->tgl_instalasi,
             ]);
             return ResponseFormatter::success($air_conditioner, 'Create Data AirConditioner success');
-        }catch(ValidationException $error){
+        } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
                     'message' => 'Something when wrong',
@@ -52,8 +53,9 @@ class AirConditionerController extends Controller
         }
     }
 
-    function update(request $request){
-        try{
+    function update(request $request)
+    {
+        try {
             $request->validate([
                 'id' => 'required'
             ]);
@@ -78,7 +80,7 @@ class AirConditionerController extends Controller
                 'tgl_instalasi' => $request->tgl_instalasi,
             ]);
             return ResponseFormatter::success($air_conditioner, 'Edit Data AirConditioner success');
-        }catch(ValidationException $error){
+        } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
                     'message' => 'Something when wrong',
@@ -86,6 +88,44 @@ class AirConditionerController extends Controller
                 ],
                 'Add AirConditioner Failed',
                 500,
+            );
+        }
+    }
+
+    function delete(request $request)
+    {
+        try {
+            $request->validate([
+                'id' => 'required',
+            ]);
+
+            $ac = AirConditioner::find($request->id);
+
+            if (!$ac) {
+                return ResponseFormatter::error(
+                    [
+                        'message' => 'Something when wrong',
+                        'error' => "Data Not Found",
+                    ],
+                    'Delete Data ac Failed',
+                    404,
+                );
+            }
+
+            $ac->forceDelete();
+
+            return ResponseFormatter::success(
+                null,
+                'Delete Data ac Successfully'
+            );
+        } catch (ValidationException $error) {
+            return ResponseFormatter::error(
+                [
+                    'message' => 'Something when wrong',
+                    'error' => array_values($error->errors())[0][0],
+                ],
+                'Delete Data ac Failed',
+                400,
             );
         }
     }

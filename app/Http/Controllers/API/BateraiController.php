@@ -10,12 +10,14 @@ use Illuminate\Validation\ValidationException;
 
 class BateraiController extends Controller
 {
-    function all(request $request){
+    function all(request $request)
+    {
         $baterai = Baterai::with('rect');
         return ResponseFormatter::success($baterai->get(), "Get Modul Successfully");
     }
 
-    function add(request $request){
+    function add(request $request)
+    {
         try {
             $request->validate([
                 'rect_id' => 'required',
@@ -45,8 +47,7 @@ class BateraiController extends Controller
                 'tgl_instalasi' => $request->tgl_instalasi,
             ]);
             return ResponseFormatter::success($baterai->load('rect'), "Create Baterai Successfully");
-
-        }catch(ValidationException $error){
+        } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
                     'message' => 'Something when wrong',
@@ -58,14 +59,15 @@ class BateraiController extends Controller
         }
     }
 
-    function update(request $request){
+    function update(request $request)
+    {
         try {
             $request->validate([
                 'id' => 'required',
             ]);
 
             $baterai = Baterai::find($request->id);
-            if(!$baterai){
+            if (!$baterai) {
                 return ResponseFormatter::error(
                     null,
                     'Data not found',
@@ -87,7 +89,6 @@ class BateraiController extends Controller
                 'tgl_instalasi' => $request->tgl_instalasi,
             ]);
             return ResponseFormatter::success($baterai->load('rect'), "Edit baterai Successfully");
-
         } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
@@ -96,6 +97,44 @@ class BateraiController extends Controller
                 ],
                 'Update Baterai Failed',
                 500,
+            );
+        }
+    }
+
+    function delete(request $request)
+    {
+        try {
+            $request->validate([
+                'id' => 'required',
+            ]);
+
+            $baterai = Baterai::find($request->id);
+
+            if (!$baterai) {
+                return ResponseFormatter::error(
+                    [
+                        'message' => 'Something when wrong',
+                        'error' => "Data Not Found",
+                    ],
+                    'Delete Data baterai Failed',
+                    404,
+                );
+            }
+
+            $baterai->forceDelete();
+
+            return ResponseFormatter::success(
+                null,
+                'Delete Data baterai Successfully'
+            );
+        } catch (ValidationException $error) {
+            return ResponseFormatter::error(
+                [
+                    'message' => 'Something when wrong',
+                    'error' => array_values($error->errors())[0][0],
+                ],
+                'Delete Data baterai Failed',
+                400,
             );
         }
     }

@@ -102,4 +102,42 @@ class UjiBateraiController extends Controller
             );
         }
     }
+
+    function delete(request $request)
+    {
+        try {
+            $request->validate([
+                'id' => 'required',
+            ]);
+
+            $uji_baterai = UjiBaterai::find($request->id);
+
+            if (!$uji_baterai) {
+                return ResponseFormatter::error(
+                    [
+                        'message' => 'Something when wrong',
+                        'error' => "Data Not Found",
+                    ],
+                    'Delete Data u$uji_baterai Failed',
+                    404,
+                );
+            }
+
+            $uji_baterai->forceDelete();
+
+            return ResponseFormatter::success(
+                null,
+                'Delete Data u$uji_baterai Successfully'
+            );
+        } catch (ValidationException $error) {
+            return ResponseFormatter::error(
+                [
+                    'message' => 'Something when wrong',
+                    'error' => array_values($error->errors())[0][0],
+                ],
+                'Delete Data u$uji_baterai Failed',
+                400,
+            );
+        }
+    }
 }

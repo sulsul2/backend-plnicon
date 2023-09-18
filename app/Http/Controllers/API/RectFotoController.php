@@ -89,4 +89,42 @@ class RectFotoController extends Controller
             );
         }
     }
+
+    function delete(request $request)
+    {
+        try {
+            $request->validate([
+                'id' => 'required',
+            ]);
+
+            $rect_foto = RectFoto::find($request->id);
+
+            if (!$rect_foto) {
+                return ResponseFormatter::error(
+                    [
+                        'message' => 'Something when wrong',
+                        'error' => "Data Not Found",
+                    ],
+                    'Delete Data rec$rect_foto Failed',
+                    404,
+                );
+            }
+
+            $rect_foto->forceDelete();
+
+            return ResponseFormatter::success(
+                null,
+                'Delete Data rec$rect_foto Successfully'
+            );
+        } catch (ValidationException $error) {
+            return ResponseFormatter::error(
+                [
+                    'message' => 'Something when wrong',
+                    'error' => array_values($error->errors())[0][0],
+                ],
+                'Delete Data rec$rect_foto Failed',
+                400,
+            );
+        }
+    }
 }

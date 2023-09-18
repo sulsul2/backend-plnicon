@@ -10,12 +10,14 @@ use Illuminate\Validation\ValidationException;
 
 class PerangkatFotoController extends Controller
 {
-    function all(request $request){
-        $perangkat_foto = PerangkatFoto::with(['rack','perangkatnilai']);
+    function all(request $request)
+    {
+        $perangkat_foto = PerangkatFoto::with(['rack', 'perangkatnilai']);
         return ResponseFormatter::success($perangkat_foto->get(), "Get Perangkat Foto Successfully");
     }
 
-    function add(request $request){
+    function add(request $request)
+    {
         try {
             $request->validate([
                 'rack_id' => 'required',
@@ -29,8 +31,7 @@ class PerangkatFotoController extends Controller
                 'url' => $request->url,
                 'deskripsi' => $request->deskripsi,
             ]);
-            return ResponseFormatter::success($perangkat_foto->load(['rack','perangkatnilai']), "Create Perangkat Foto Successfully");
-
+            return ResponseFormatter::success($perangkat_foto->load(['rack', 'perangkatnilai']), "Create Perangkat Foto Successfully");
         } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
@@ -43,14 +44,15 @@ class PerangkatFotoController extends Controller
         }
     }
 
-    function update(request $request){
+    function update(request $request)
+    {
         try {
             $request->validate([
                 'id' => 'required',
             ]);
 
             $perangkat_foto = PerangkatFoto::find($request->id);
-            if(!$perangkat_foto){
+            if (!$perangkat_foto) {
                 return ResponseFormatter::error(
                     null,
                     'Data not found',
@@ -64,8 +66,7 @@ class PerangkatFotoController extends Controller
                 'url' => $request->url,
                 'deskripsi' => $request->deskripsi,
             ]);
-            return ResponseFormatter::success($perangkat_foto->load(['rack','perangkatnilai']), "Edit Perangkat Foto Successfully");
-
+            return ResponseFormatter::success($perangkat_foto->load(['rack', 'perangkatnilai']), "Edit Perangkat Foto Successfully");
         } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
@@ -74,6 +75,44 @@ class PerangkatFotoController extends Controller
                 ],
                 'Add Perangkat Foto Failed',
                 500,
+            );
+        }
+    }
+
+    function delete(request $request)
+    {
+        try {
+            $request->validate([
+                'id' => 'required',
+            ]);
+
+            $perangkat_foto = PerangkatFoto::find($request->id);
+
+            if (!$perangkat_foto) {
+                return ResponseFormatter::error(
+                    [
+                        'message' => 'Something when wrong',
+                        'error' => "Data Not Found",
+                    ],
+                    'Delete Data p$perangkat_foto Failed',
+                    404,
+                );
+            }
+
+            $perangkat_foto->forceDelete();
+
+            return ResponseFormatter::success(
+                null,
+                'Delete Data p$perangkat_foto Successfully'
+            );
+        } catch (ValidationException $error) {
+            return ResponseFormatter::error(
+                [
+                    'message' => 'Something when wrong',
+                    'error' => array_values($error->errors())[0][0],
+                ],
+                'Delete Data p$perangkat_foto Failed',
+                400,
             );
         }
     }

@@ -16,8 +16,9 @@ class ExAlarmFotoController extends Controller
         return ResponseFormatter::success($ex_alarm_foto->get(), "Get Ex Alarm Foto Successfully");
     }
 
-    function add(request $request){
-        try{
+    function add(request $request)
+    {
+        try {
             $request->validate([
                 'ex_alarm_id' => 'required',
                 'fotoFile' => 'required',
@@ -32,7 +33,7 @@ class ExAlarmFotoController extends Controller
                 'deskripsi' => $request->deskripsi,
             ]);
             return ResponseFormatter::success($ex_alarm_foto, 'Create Data Ex Alarm Foto success');
-        }catch(ValidationException $error){
+        } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
                     'message' => 'Something when wrong',
@@ -44,8 +45,9 @@ class ExAlarmFotoController extends Controller
         }
     }
 
-    function update(request $request){
-        try{
+    function update(request $request)
+    {
+        try {
             $request->validate([
                 'id' => 'required'
             ]);
@@ -72,7 +74,7 @@ class ExAlarmFotoController extends Controller
                 'deskripsi' => $request->deskripsi,
             ]);
             return ResponseFormatter::success($ex_alarm_foto, 'Edit Data Ex Alarm Foto success');
-        }catch(ValidationException $error){
+        } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
                     'message' => 'Something when wrong',
@@ -80,6 +82,44 @@ class ExAlarmFotoController extends Controller
                 ],
                 'Add Ex Alarm Foto Failed',
                 500,
+            );
+        }
+    }
+
+    function delete(request $request)
+    {
+        try {
+            $request->validate([
+                'id' => 'required',
+            ]);
+
+            $ex_alarm = ExAlarmFoto::find($request->id);
+
+            if (!$ex_alarm) {
+                return ResponseFormatter::error(
+                    [
+                        'message' => 'Something when wrong',
+                        'error' => "Data Not Found",
+                    ],
+                    'Delete Data ex_alarm Failed',
+                    404,
+                );
+            }
+
+            $ex_alarm->forceDelete();
+
+            return ResponseFormatter::success(
+                null,
+                'Delete Data ex_alarm Successfully'
+            );
+        } catch (ValidationException $error) {
+            return ResponseFormatter::error(
+                [
+                    'message' => 'Something when wrong',
+                    'error' => array_values($error->errors())[0][0],
+                ],
+                'Delete Data ex_alarm Failed',
+                400,
             );
         }
     }

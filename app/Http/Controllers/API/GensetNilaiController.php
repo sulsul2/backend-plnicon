@@ -140,4 +140,42 @@ class GensetNilaiController extends Controller
             );
         }
     }
+
+    function delete(request $request)
+    {
+        try {
+            $request->validate([
+                'id' => 'required',
+            ]);
+
+            $genset_nilai = GensetNilai::find($request->id);
+
+            if (!$genset_nilai) {
+                return ResponseFormatter::error(
+                    [
+                        'message' => 'Something when wrong',
+                        'error' => "Data Not Found",
+                    ],
+                    'Delete Data genset$genset_nilai Failed',
+                    404,
+                );
+            }
+
+            $genset_nilai->forceDelete();
+
+            return ResponseFormatter::success(
+                null,
+                'Delete Data genset$genset_nilai Successfully'
+            );
+        } catch (ValidationException $error) {
+            return ResponseFormatter::error(
+                [
+                    'message' => 'Something when wrong',
+                    'error' => array_values($error->errors())[0][0],
+                ],
+                'Delete Data genset$genset_nilai Failed',
+                400,
+            );
+        }
+    }
 }

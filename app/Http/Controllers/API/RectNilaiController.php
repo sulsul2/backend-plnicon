@@ -100,4 +100,42 @@ class RectNilaiController extends Controller
             );
         }
     }
+
+    function delete(request $request)
+    {
+        try {
+            $request->validate([
+                'id' => 'required',
+            ]);
+
+            $rect_nilai = RectNilai::find($request->id);
+
+            if (!$rect_nilai) {
+                return ResponseFormatter::error(
+                    [
+                        'message' => 'Something when wrong',
+                        'error' => "Data Not Found",
+                    ],
+                    'Delete Data rec$rect_nilai Failed',
+                    404,
+                );
+            }
+
+            $rect_nilai->forceDelete();
+
+            return ResponseFormatter::success(
+                null,
+                'Delete Data rec$rect_nilai Successfully'
+            );
+        } catch (ValidationException $error) {
+            return ResponseFormatter::error(
+                [
+                    'message' => 'Something when wrong',
+                    'error' => array_values($error->errors())[0][0],
+                ],
+                'Delete Data rec$rect_nilai Failed',
+                400,
+            );
+        }
+    }
 }

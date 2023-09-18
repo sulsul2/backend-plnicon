@@ -16,8 +16,9 @@ class InverterFotoController extends Controller
         return ResponseFormatter::success($inverter_foto->get(), "Get Inverter Foto Successfully");
     }
 
-    function add(request $request){
-        try{
+    function add(request $request)
+    {
+        try {
             $request->validate([
                 'inverter_nilai_id' => 'required',
                 'fotoFile' => 'required',
@@ -32,7 +33,7 @@ class InverterFotoController extends Controller
                 'deskripsi' => $request->deskripsi,
             ]);
             return ResponseFormatter::success($inverter_foto, 'Create Data Inverter Foto success');
-        }catch(ValidationException $error){
+        } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
                     'message' => 'Something when wrong',
@@ -44,8 +45,9 @@ class InverterFotoController extends Controller
         }
     }
 
-    function update(request $request){
-        try{
+    function update(request $request)
+    {
+        try {
             $request->validate([
                 'id' => 'required'
             ]);
@@ -72,7 +74,7 @@ class InverterFotoController extends Controller
                 'deskripsi' => $request->deskripsi,
             ]);
             return ResponseFormatter::success($inverter_foto, 'Edit Data Inverter Foto success');
-        }catch(ValidationException $error){
+        } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
                     'message' => 'Something when wrong',
@@ -80,6 +82,44 @@ class InverterFotoController extends Controller
                 ],
                 'Add Inverter Foto Failed',
                 500,
+            );
+        }
+    }
+
+    function delete(request $request)
+    {
+        try {
+            $request->validate([
+                'id' => 'required',
+            ]);
+
+            $inverter_foto = InverterFoto::find($request->id);
+
+            if (!$inverter_foto) {
+                return ResponseFormatter::error(
+                    [
+                        'message' => 'Something when wrong',
+                        'error' => "Data Not Found",
+                    ],
+                    'Delete Data inver$inverter_foto Failed',
+                    404,
+                );
+            }
+
+            $inverter_foto->forceDelete();
+
+            return ResponseFormatter::success(
+                null,
+                'Delete Data inver$inverter_foto Successfully'
+            );
+        } catch (ValidationException $error) {
+            return ResponseFormatter::error(
+                [
+                    'message' => 'Something when wrong',
+                    'error' => array_values($error->errors())[0][0],
+                ],
+                'Delete Data inver$inverter_foto Failed',
+                400,
             );
         }
     }

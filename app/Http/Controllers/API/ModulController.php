@@ -10,12 +10,14 @@ use Illuminate\Validation\ValidationException;
 
 class ModulController extends Controller
 {
-    function all(request $request){
+    function all(request $request)
+    {
         $modul = Modul::with('rect');
         return ResponseFormatter::success($modul->get(), "Get Modul Successfully");
     }
 
-    function add(request $request){
+    function add(request $request)
+    {
         try {
             $request->validate([
                 'rect_id' => 'required',
@@ -29,8 +31,7 @@ class ModulController extends Controller
                 'sn' => $request->sn
             ]);
             return ResponseFormatter::success($modul->load('rect'), "Create Modul Successfully");
-
-        }catch(ValidationException $error){
+        } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
                     'message' => 'Something when wrong',
@@ -42,14 +43,15 @@ class ModulController extends Controller
         }
     }
 
-    function update(request $request){
+    function update(request $request)
+    {
         try {
             $request->validate([
                 'id' => 'required',
             ]);
 
             $modul = Modul::find($request->id);
-            if(!$modul){
+            if (!$modul) {
                 return ResponseFormatter::error(
                     null,
                     'Data not found',
@@ -63,7 +65,6 @@ class ModulController extends Controller
                 'sn' => $request->sn
             ]);
             return ResponseFormatter::success($modul->load('rect'), "Edit Modul Successfully");
-
         } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
@@ -72,6 +73,44 @@ class ModulController extends Controller
                 ],
                 'Update Modul Failed',
                 500,
+            );
+        }
+    }
+
+    function delete(request $request)
+    {
+        try {
+            $request->validate([
+                'id' => 'required',
+            ]);
+
+            $modul = Modul::find($request->id);
+
+            if (!$modul) {
+                return ResponseFormatter::error(
+                    [
+                        'message' => 'Something when wrong',
+                        'error' => "Data Not Found",
+                    ],
+                    'Delete Data modu$modul Failed',
+                    404,
+                );
+            }
+
+            $modul->forceDelete();
+
+            return ResponseFormatter::success(
+                null,
+                'Delete Data modu$modul Successfully'
+            );
+        } catch (ValidationException $error) {
+            return ResponseFormatter::error(
+                [
+                    'message' => 'Something when wrong',
+                    'error' => array_values($error->errors())[0][0],
+                ],
+                'Delete Data modu$modul Failed',
+                400,
             );
         }
     }

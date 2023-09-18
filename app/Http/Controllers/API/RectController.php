@@ -10,11 +10,13 @@ use Illuminate\Http\Request;
 
 class RectController extends Controller
 {
-    function all(request $request){
+    function all(request $request)
+    {
         $rect = Rect::with('datapop');
         return ResponseFormatter::success($rect->get(), "Get Rect Successfully");
     }
-    function add(request $request){
+    function add(request $request)
+    {
         try {
             $request->validate([
                 'pop_id' => 'required',
@@ -41,8 +43,7 @@ class RectController extends Controller
 
             ]);
             return ResponseFormatter::success($rect->load('datapop'), "Create Jadwal PM Successfully");
-
-        }catch(ValidationException $error){
+        } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
                     'message' => 'Something when wrong',
@@ -54,14 +55,15 @@ class RectController extends Controller
         }
     }
 
-    function update(request $request){
+    function update(request $request)
+    {
         try {
             $request->validate([
                 'id' => 'required',
             ]);
 
             $rect = Rect::find($request->id);
-            if(!$rect){
+            if (!$rect) {
                 return ResponseFormatter::error(
                     null,
                     'Data not found',
@@ -81,7 +83,6 @@ class RectController extends Controller
                 'tgl_instalasi' => $request->tgl_instalasi,
             ]);
             return ResponseFormatter::success($rect->load('datapop'), "Edit rect Successfully");
-
         } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
@@ -90,6 +91,44 @@ class RectController extends Controller
                 ],
                 'Update Recti Failed',
                 500,
+            );
+        }
+    }
+
+    function delete(request $request)
+    {
+        try {
+            $request->validate([
+                'id' => 'required',
+            ]);
+
+            $rect = Rect::find($request->id);
+
+            if (!$rect) {
+                return ResponseFormatter::error(
+                    [
+                        'message' => 'Something when wrong',
+                        'error' => "Data Not Found",
+                    ],
+                    'Delete Data rec$rect Failed',
+                    404,
+                );
+            }
+
+            $rect->forceDelete();
+
+            return ResponseFormatter::success(
+                null,
+                'Delete Data rec$rect Successfully'
+            );
+        } catch (ValidationException $error) {
+            return ResponseFormatter::error(
+                [
+                    'message' => 'Something when wrong',
+                    'error' => array_values($error->errors())[0][0],
+                ],
+                'Delete Data rec$rect Failed',
+                400,
             );
         }
     }

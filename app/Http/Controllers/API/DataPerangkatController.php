@@ -10,12 +10,14 @@ use Illuminate\Validation\ValidationException;
 
 class DataPerangkatController extends Controller
 {
-    function all(request $request){
+    function all(request $request)
+    {
         $data_perangkat = DataPerangkat::with('datarack');
         return ResponseFormatter::success($data_perangkat->get(), "Get Data Perangkat Successfully");
     }
 
-    function add(request $request){
+    function add(request $request)
+    {
         try {
             $request->validate([
                 'rack_id' => 'required',
@@ -39,10 +41,9 @@ class DataPerangkatController extends Controller
                 'jenis' => $request->jenis,
                 'tipe' => $request->tipe,
                 'tgl_instalasi' => $request->tgl_instalasi,
-                
+
             ]);
             return ResponseFormatter::success($data_perangkat->load('datarack'), "Create Data Perangkat Successfully");
-
         } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
@@ -55,14 +56,15 @@ class DataPerangkatController extends Controller
         }
     }
 
-    function update(request $request){
+    function update(request $request)
+    {
         try {
             $request->validate([
                 'id' => 'required',
             ]);
 
             $data_perangkat = DataPerangkat::find($request->id);
-            if(!$data_perangkat){
+            if (!$data_perangkat) {
                 return ResponseFormatter::error(
                     null,
                     'Data not found',
@@ -82,7 +84,6 @@ class DataPerangkatController extends Controller
                 'tgl_instalasi' => $request->tgl_instalasi,
             ]);
             return ResponseFormatter::success($data_perangkat->load('datarack'), "Edit Data Perangkat Successfully");
-
         } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
@@ -91,6 +92,44 @@ class DataPerangkatController extends Controller
                 ],
                 'Add Data Perangkat Failed',
                 500,
+            );
+        }
+    }
+
+    function delete(request $request)
+    {
+        try {
+            $request->validate([
+                'id' => 'required',
+            ]);
+
+            $perangkat = DataPerangkat::find($request->id);
+
+            if (!$perangkat) {
+                return ResponseFormatter::error(
+                    [
+                        'message' => 'Something when wrong',
+                        'error' => "Data Not Found",
+                    ],
+                    'Delete Data perangkat Failed',
+                    404,
+                );
+            }
+
+            $perangkat->forceDelete();
+
+            return ResponseFormatter::success(
+                null,
+                'Delete Data perangkat Successfully'
+            );
+        } catch (ValidationException $error) {
+            return ResponseFormatter::error(
+                [
+                    'message' => 'Something when wrong',
+                    'error' => array_values($error->errors())[0][0],
+                ],
+                'Delete Data perangkat Failed',
+                400,
             );
         }
     }

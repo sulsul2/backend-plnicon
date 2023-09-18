@@ -10,12 +10,14 @@ use Illuminate\Validation\ValidationException;
 
 class NotifikasiController extends Controller
 {
-    function all(request $request){
+    function all(request $request)
+    {
         $notifikasi = Notifikasi::with('user');
         return ResponseFormatter::success($notifikasi->get(), "Get Notifikasi Successfully");
     }
 
-    function add(request $request){
+    function add(request $request)
+    {
         try {
             $request->validate([
                 'user_id' => 'required',
@@ -31,8 +33,7 @@ class NotifikasiController extends Controller
                 'status' => $request->status,
             ]);
             return ResponseFormatter::success($notifikasi->load('user'), "Create Notifikasi Successfully");
-
-        }catch(ValidationException $error){
+        } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
                     'message' => 'Something when wrong',
@@ -44,14 +45,15 @@ class NotifikasiController extends Controller
         }
     }
 
-    function update(request $request){
+    function update(request $request)
+    {
         try {
             $request->validate([
                 'id' => 'required',
             ]);
 
             $notifikasi = Notifikasi::find($request->id);
-            if(!$notifikasi){
+            if (!$notifikasi) {
                 return ResponseFormatter::error(
                     null,
                     'Data not found',
@@ -66,7 +68,6 @@ class NotifikasiController extends Controller
                 'status' => $request->status,
             ]);
             return ResponseFormatter::success($notifikasi->load('user'), "Edit Notifikasi Successfully");
-
         } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
@@ -75,6 +76,44 @@ class NotifikasiController extends Controller
                 ],
                 'Update Baterai Failed',
                 500,
+            );
+        }
+    }
+
+    function delete(request $request)
+    {
+        try {
+            $request->validate([
+                'id' => 'required',
+            ]);
+
+            $notifikasi = Notifikasi::find($request->id);
+
+            if (!$notifikasi) {
+                return ResponseFormatter::error(
+                    [
+                        'message' => 'Something when wrong',
+                        'error' => "Data Not Found",
+                    ],
+                    'Delete Data noti$notifikasi Failed',
+                    404,
+                );
+            }
+
+            $notifikasi->forceDelete();
+
+            return ResponseFormatter::success(
+                null,
+                'Delete Data noti$notifikasi Successfully'
+            );
+        } catch (ValidationException $error) {
+            return ResponseFormatter::error(
+                [
+                    'message' => 'Something when wrong',
+                    'error' => array_values($error->errors())[0][0],
+                ],
+                'Delete Data noti$notifikasi Failed',
+                400,
             );
         }
     }

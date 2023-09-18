@@ -10,11 +10,13 @@ use Illuminate\Validation\ValidationException;
 
 class PortController extends Controller
 {
-    function all(request $request){
+    function all(request $request)
+    {
         $port = Port::with('perangkat');
         return ResponseFormatter::success($port->get(), "Get Port Successfully");
     }
-    function add(request $request){
+    function add(request $request)
+    {
         try {
             $request->validate([
                 'perangkat_id' => 'required',
@@ -36,8 +38,7 @@ class PortController extends Controller
                 'tgl_instalasi' => $request->tgl_instalasi,
             ]);
             return ResponseFormatter::success($port->load('perangkat'), "Create Port Successfully");
-
-        }catch(ValidationException $error){
+        } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
                     'message' => 'Something when wrong',
@@ -49,14 +50,15 @@ class PortController extends Controller
         }
     }
 
-    function update(request $request){
+    function update(request $request)
+    {
         try {
             $request->validate([
                 'id' => 'required',
             ]);
 
             $port = Port::find($request->id);
-            if(!$port){
+            if (!$port) {
                 return ResponseFormatter::error(
                     null,
                     'Data not found',
@@ -77,7 +79,6 @@ class PortController extends Controller
                 'tgl_instalasi' => $request->tgl_instalasi,
             ]);
             return ResponseFormatter::success($port->load('perangkat'), "Edit port Successfully");
-
         } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
@@ -86,6 +87,44 @@ class PortController extends Controller
                 ],
                 'Update port Failed',
                 500,
+            );
+        }
+    }
+
+    function delete(request $request)
+    {
+        try {
+            $request->validate([
+                'id' => 'required',
+            ]);
+
+            $port = Port::find($request->id);
+
+            if (!$port) {
+                return ResponseFormatter::error(
+                    [
+                        'message' => 'Something when wrong',
+                        'error' => "Data Not Found",
+                    ],
+                    'Delete Data port Failed',
+                    404,
+                );
+            }
+
+            $port->forceDelete();
+
+            return ResponseFormatter::success(
+                null,
+                'Delete Data port Successfully'
+            );
+        } catch (ValidationException $error) {
+            return ResponseFormatter::error(
+                [
+                    'message' => 'Something when wrong',
+                    'error' => array_values($error->errors())[0][0],
+                ],
+                'Delete Data port Failed',
+                400,
             );
         }
     }

@@ -107,4 +107,42 @@ class InverterNilaiController extends Controller
             );
         }
     }
+
+    function delete(request $request)
+    {
+        try {
+            $request->validate([
+                'id' => 'required',
+            ]);
+
+            $inverter_nilai = InverterNilai::find($request->id);
+
+            if (!$inverter_nilai) {
+                return ResponseFormatter::error(
+                    [
+                        'message' => 'Something when wrong',
+                        'error' => "Data Not Found",
+                    ],
+                    'Delete Data inverter_$inverter_nilai Failed',
+                    404,
+                );
+            }
+
+            $inverter_nilai->forceDelete();
+
+            return ResponseFormatter::success(
+                null,
+                'Delete Data inverter_$inverter_nilai Successfully'
+            );
+        } catch (ValidationException $error) {
+            return ResponseFormatter::error(
+                [
+                    'message' => 'Something when wrong',
+                    'error' => array_values($error->errors())[0][0],
+                ],
+                'Delete Data inverter_$inverter_nilai Failed',
+                400,
+            );
+        }
+    }
 }

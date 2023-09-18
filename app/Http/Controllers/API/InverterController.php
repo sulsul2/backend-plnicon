@@ -13,8 +13,8 @@ class InverterController extends Controller
     function all(request $request)
     {
         $inverter = Inverter::with('dataPop');
-        if($request->pop_id){
-            $inverter->where('pop_id',$request->pop_id);
+        if ($request->pop_id) {
+            $inverter->where('pop_id', $request->pop_id);
             if (!$inverter) {
                 return ResponseFormatter::error(
                     null,
@@ -27,8 +27,9 @@ class InverterController extends Controller
         return ResponseFormatter::success($inverter->get(), "Get Inverter Successfully");
     }
 
-    function add(request $request){
-        try{
+    function add(request $request)
+    {
+        try {
             $request->validate([
                 'pop_id' => 'required',
                 'sn' => 'required',
@@ -49,7 +50,7 @@ class InverterController extends Controller
                 'tgl_instalasi' => $request->tgl_instalasi,
             ]);
             return ResponseFormatter::success($inverter, 'Create Data Inverter success');
-        }catch(ValidationException $error){
+        } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
                     'message' => 'Something when wrong',
@@ -61,8 +62,9 @@ class InverterController extends Controller
         }
     }
 
-    function update(request $request){
-        try{
+    function update(request $request)
+    {
+        try {
             $request->validate([
                 'id' => 'required'
             ]);
@@ -86,7 +88,7 @@ class InverterController extends Controller
                 'tgl_instalasi' => $request->tgl_instalasi,
             ]);
             return ResponseFormatter::success($inverter, 'Edit Data Inverter success');
-        }catch(ValidationException $error){
+        } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
                     'message' => 'Something when wrong',
@@ -94,6 +96,44 @@ class InverterController extends Controller
                 ],
                 'Add Inverter Failed',
                 500,
+            );
+        }
+    }
+
+    function delete(request $request)
+    {
+        try {
+            $request->validate([
+                'id' => 'required',
+            ]);
+
+            $inverter = Inverter::find($request->id);
+
+            if (!$inverter) {
+                return ResponseFormatter::error(
+                    [
+                        'message' => 'Something when wrong',
+                        'error' => "Data Not Found",
+                    ],
+                    'Delete Data inverter Failed',
+                    404,
+                );
+            }
+
+            $inverter->forceDelete();
+
+            return ResponseFormatter::success(
+                null,
+                'Delete Data inverter Successfully'
+            );
+        } catch (ValidationException $error) {
+            return ResponseFormatter::error(
+                [
+                    'message' => 'Something when wrong',
+                    'error' => array_values($error->errors())[0][0],
+                ],
+                'Delete Data inverter Failed',
+                400,
             );
         }
     }

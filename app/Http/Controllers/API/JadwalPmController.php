@@ -11,10 +11,11 @@ use Illuminate\Validation\ValidationException;
 
 class JadwalPmController extends Controller
 {
-    function all(request $request){
-        $jadwal_pm = JadwalPm::with(['datapop','user']);
-        if($request->id){
-            $jadwal = JadwalPm::with(['genset.foto','inverter.foto','kwh.foto','ac.foto','pdb.foto','environment.foto','ex_alarm.foto','rect.foto','perangkat.foto','baterai.foto'])->where('id',$request->id);
+    function all(request $request)
+    {
+        $jadwal_pm = JadwalPm::with(['datapop', 'user']);
+        if ($request->id) {
+            $jadwal = JadwalPm::with(['genset.foto', 'inverter.foto', 'kwh.foto', 'ac.foto', 'pdb.foto', 'environment.foto', 'ex_alarm.foto', 'rect.foto', 'perangkat.foto', 'baterai.foto'])->where('id', $request->id);
             if (!$jadwal) {
                 return ResponseFormatter::error(
                     null,
@@ -27,13 +28,15 @@ class JadwalPmController extends Controller
         return ResponseFormatter::success($jadwal_pm->get(), "Get Jadwal PM Successfully");
     }
 
-    function getByUser(request $request){
+    function getByUser(request $request)
+    {
         $id = Auth::id();
-        $jadwal_pm = JadwalPm::with('datapop')->where('user_id',$id);
+        $jadwal_pm = JadwalPm::with('datapop')->where('user_id', $id);
         return ResponseFormatter::success($jadwal_pm->get(), "Get Jadwal PM Successfully");
     }
 
-    function add(request $request){
+    function add(request $request)
+    {
         try {
             $request->validate([
                 'pop_id' => 'required',
@@ -48,7 +51,7 @@ class JadwalPmController extends Controller
             ]);
 
             $jadwal_pm = JadwalPm::create([
-                'pm_kode' => "PM".$request->plan,
+                'pm_kode' => "PM" . $request->plan,
                 'pop_id' => $request->pop_id,
                 'user_id' => $request->user_id,
                 'plan' => $request->plan,
@@ -66,8 +69,7 @@ class JadwalPmController extends Controller
                 'dokumen_osp' => $request->dokumen_osp,
 
             ]);
-            return ResponseFormatter::success($jadwal_pm->load(['datapop','user']), "Create Jadwal PM Successfully");
-
+            return ResponseFormatter::success($jadwal_pm->load(['datapop', 'user']), "Create Jadwal PM Successfully");
         } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
@@ -80,14 +82,15 @@ class JadwalPmController extends Controller
         }
     }
 
-    function update(request $request){
+    function update(request $request)
+    {
         try {
             $request->validate([
                 'id' => 'required',
             ]);
 
             $jadwal_pm = JadwalPm::find($request->id);
-            if(!$jadwal_pm){
+            if (!$jadwal_pm) {
                 return ResponseFormatter::error(
                     null,
                     'Data not found',
@@ -113,8 +116,7 @@ class JadwalPmController extends Controller
                 'dokumen_osp' => $request->dokumen_osp,
 
             ]);
-            return ResponseFormatter::success($jadwal_pm->load(['datapop','user']), "Edit Jadwal PM Successfully");
-
+            return ResponseFormatter::success($jadwal_pm->load(['datapop', 'user']), "Edit Jadwal PM Successfully");
         } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
@@ -123,6 +125,44 @@ class JadwalPmController extends Controller
                 ],
                 'Add Jadwal PM Failed',
                 500,
+            );
+        }
+    }
+
+    function delete(request $request)
+    {
+        try {
+            $request->validate([
+                'id' => 'required',
+            ]);
+
+            $jadwal_pm = JadwalPm::find($request->id);
+
+            if (!$jadwal_pm) {
+                return ResponseFormatter::error(
+                    [
+                        'message' => 'Something when wrong',
+                        'error' => "Data Not Found",
+                    ],
+                    'Delete Data jadwal_pm Failed',
+                    404,
+                );
+            }
+
+            $jadwal_pm->forceDelete();
+
+            return ResponseFormatter::success(
+                null,
+                'Delete Data jadwal_pm Successfully'
+            );
+        } catch (ValidationException $error) {
+            return ResponseFormatter::error(
+                [
+                    'message' => 'Something when wrong',
+                    'error' => array_values($error->errors())[0][0],
+                ],
+                'Delete Data jadwal_pm Failed',
+                400,
             );
         }
     }

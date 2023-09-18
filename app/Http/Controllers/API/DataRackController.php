@@ -10,12 +10,14 @@ use Illuminate\Validation\ValidationException;
 
 class DataRackController extends Controller
 {
-    function all(request $request){
+    function all(request $request)
+    {
         $data_rack = DataRack::with('datapop');
         return ResponseFormatter::success($data_rack->get(), "Get Data Rack Successfully");
     }
 
-    function add(request $request){
+    function add(request $request)
+    {
         try {
             $request->validate([
                 'pop_id' => 'required',
@@ -29,10 +31,9 @@ class DataRackController extends Controller
                 'nomor_rack' => $request->nomor_rack,
                 'lokasi' => $request->lokasi,
                 'tgl_instalasi' => $request->tgl_instalasi,
-                
+
             ]);
             return ResponseFormatter::success($data_rack->load('datapop'), "Create Data Rack Successfully");
-
         } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
@@ -45,14 +46,15 @@ class DataRackController extends Controller
         }
     }
 
-    function update(request $request){
+    function update(request $request)
+    {
         try {
             $request->validate([
                 'id' => 'required',
             ]);
 
             $data_rack = DataRack::find($request->id);
-            if(!$data_rack){
+            if (!$data_rack) {
                 return ResponseFormatter::error(
                     null,
                     'Data not found',
@@ -67,7 +69,6 @@ class DataRackController extends Controller
                 'tgl_instalasi' => $request->tgl_instalasi,
             ]);
             return ResponseFormatter::success($data_rack->load('datapop'), "Edit Data rack Successfully");
-
         } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
@@ -76,6 +77,44 @@ class DataRackController extends Controller
                 ],
                 'Add Data Rack Failed',
                 500,
+            );
+        }
+    }
+
+    function delete(request $request)
+    {
+        try {
+            $request->validate([
+                'id' => 'required',
+            ]);
+
+            $rack = DataRack::find($request->id);
+
+            if (!$rack) {
+                return ResponseFormatter::error(
+                    [
+                        'message' => 'Something when wrong',
+                        'error' => "Data Not Found",
+                    ],
+                    'Delete Data rack Failed',
+                    404,
+                );
+            }
+
+            $rack->forceDelete();
+
+            return ResponseFormatter::success(
+                null,
+                'Delete Data rack Successfully'
+            );
+        } catch (ValidationException $error) {
+            return ResponseFormatter::error(
+                [
+                    'message' => 'Something when wrong',
+                    'error' => array_values($error->errors())[0][0],
+                ],
+                'Delete Data rack Failed',
+                400,
             );
         }
     }

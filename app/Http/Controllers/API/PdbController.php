@@ -88,4 +88,42 @@ class PdbController extends Controller
             );
         }
     }
+
+    function delete(request $request)
+    {
+        try {
+            $request->validate([
+                'id' => 'required',
+            ]);
+
+            $pdb = Pdb::find($request->id);
+
+            if (!$pdb) {
+                return ResponseFormatter::error(
+                    [
+                        'message' => 'Something when wrong',
+                        'error' => "Data Not Found",
+                    ],
+                    'Delete Data p$pdb Failed',
+                    404,
+                );
+            }
+
+            $pdb->forceDelete();
+
+            return ResponseFormatter::success(
+                null,
+                'Delete Data p$pdb Successfully'
+            );
+        } catch (ValidationException $error) {
+            return ResponseFormatter::error(
+                [
+                    'message' => 'Something when wrong',
+                    'error' => array_values($error->errors())[0][0],
+                ],
+                'Delete Data p$pdb Failed',
+                400,
+            );
+        }
+    }
 }

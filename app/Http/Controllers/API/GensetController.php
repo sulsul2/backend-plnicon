@@ -13,8 +13,8 @@ class GensetController extends Controller
     function all(request $request)
     {
         $genset = Genset::with('dataPop');
-        if($request->pop_id){
-            $genset->where('pop_id',$request->pop_id);
+        if ($request->pop_id) {
+            $genset->where('pop_id', $request->pop_id);
             if (!$genset) {
                 return ResponseFormatter::error(
                     null,
@@ -27,8 +27,9 @@ class GensetController extends Controller
         return ResponseFormatter::success($genset->get(), "Get Genset Successfully");
     }
 
-    function add(request $request){
-        try{
+    function add(request $request)
+    {
+        try {
             $request->validate([
                 'pop_id' => 'required',
                 'merk' => 'required',
@@ -61,7 +62,7 @@ class GensetController extends Controller
                 'tgl_instalasi' => $request->tgl_instalasi,
             ]);
             return ResponseFormatter::success($genset, 'Create Data Genset success');
-        }catch(ValidationException $error){
+        } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
                     'message' => 'Something when wrong',
@@ -73,8 +74,9 @@ class GensetController extends Controller
         }
     }
 
-    function update(request $request){
-        try{
+    function update(request $request)
+    {
+        try {
             $request->validate([
                 'id' => 'required'
             ]);
@@ -104,7 +106,7 @@ class GensetController extends Controller
                 'tgl_instalasi' => $request->tgl_instalasi,
             ]);
             return ResponseFormatter::success($genset, 'Edit Data Genset success');
-        }catch(ValidationException $error){
+        } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
                     'message' => 'Something when wrong',
@@ -112,6 +114,44 @@ class GensetController extends Controller
                 ],
                 'Add Genset Failed',
                 500,
+            );
+        }
+    }
+
+    function delete(request $request)
+    {
+        try {
+            $request->validate([
+                'id' => 'required',
+            ]);
+
+            $genset = Genset::find($request->id);
+
+            if (!$genset) {
+                return ResponseFormatter::error(
+                    [
+                        'message' => 'Something when wrong',
+                        'error' => "Data Not Found",
+                    ],
+                    'Delete Data genset Failed',
+                    404,
+                );
+            }
+
+            $genset->forceDelete();
+
+            return ResponseFormatter::success(
+                null,
+                'Delete Data genset Successfully'
+            );
+        } catch (ValidationException $error) {
+            return ResponseFormatter::error(
+                [
+                    'message' => 'Something when wrong',
+                    'error' => array_values($error->errors())[0][0],
+                ],
+                'Delete Data genset Failed',
+                400,
             );
         }
     }

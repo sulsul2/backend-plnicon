@@ -16,8 +16,9 @@ class EnvironmentFotoController extends Controller
         return ResponseFormatter::success($environment_foto->get(), "Get Environment Foto Successfully");
     }
 
-    function add(request $request){
-        try{
+    function add(request $request)
+    {
+        try {
             $request->validate([
                 'env_id' => 'required',
                 'fotoFile' => 'required',
@@ -33,7 +34,7 @@ class EnvironmentFotoController extends Controller
                 'deskripsi' => $request->deskripsi,
             ]);
             return ResponseFormatter::success($environment_foto, 'Create Data Environment Foto success');
-        }catch(ValidationException $error){
+        } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
                     'message' => 'Something when wrong',
@@ -45,8 +46,9 @@ class EnvironmentFotoController extends Controller
         }
     }
 
-    function update(request $request){
-        try{
+    function update(request $request)
+    {
+        try {
             $request->validate([
                 'id' => 'required'
             ]);
@@ -73,7 +75,7 @@ class EnvironmentFotoController extends Controller
                 'deskripsi' => $request->deskripsi,
             ]);
             return ResponseFormatter::success($environment_foto, 'Edit Data Environment Foto success');
-        }catch(ValidationException $error){
+        } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
                     'message' => 'Something when wrong',
@@ -81,6 +83,44 @@ class EnvironmentFotoController extends Controller
                 ],
                 'Add Environment Foto Failed',
                 500,
+            );
+        }
+    }
+
+    function delete(request $request)
+    {
+        try {
+            $request->validate([
+                'id' => 'required',
+            ]);
+
+            $environment = EnvironmentFoto::find($request->id);
+
+            if (!$environment) {
+                return ResponseFormatter::error(
+                    [
+                        'message' => 'Something when wrong',
+                        'error' => "Data Not Found",
+                    ],
+                    'Delete Data environment Failed',
+                    404,
+                );
+            }
+
+            $environment->forceDelete();
+
+            return ResponseFormatter::success(
+                null,
+                'Delete Data environment Successfully'
+            );
+        } catch (ValidationException $error) {
+            return ResponseFormatter::error(
+                [
+                    'message' => 'Something when wrong',
+                    'error' => array_values($error->errors())[0][0],
+                ],
+                'Delete Data environment Failed',
+                400,
             );
         }
     }

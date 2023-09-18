@@ -103,4 +103,42 @@ class EnvironmentController extends Controller
             );
         }
     }
+
+    function delete(request $request)
+    {
+        try {
+            $request->validate([
+                'id' => 'required',
+            ]);
+
+            $environment = Environment::find($request->id);
+
+            if (!$environment) {
+                return ResponseFormatter::error(
+                    [
+                        'message' => 'Something when wrong',
+                        'error' => "Data Not Found",
+                    ],
+                    'Delete Data environment Failed',
+                    404,
+                );
+            }
+
+            $environment->forceDelete();
+
+            return ResponseFormatter::success(
+                null,
+                'Delete Data environment Successfully'
+            );
+        } catch (ValidationException $error) {
+            return ResponseFormatter::error(
+                [
+                    'message' => 'Something when wrong',
+                    'error' => array_values($error->errors())[0][0],
+                ],
+                'Delete Data environment Failed',
+                400,
+            );
+        }
+    }
 }

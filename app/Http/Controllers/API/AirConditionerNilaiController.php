@@ -94,4 +94,42 @@ class AirConditionerNilaiController extends Controller
             );
         }
     }
+
+    function delete(request $request)
+    {
+        try {
+            $request->validate([
+                'id' => 'required',
+            ]);
+
+            $ac = AirConditionerNilai::find($request->id);
+
+            if (!$ac) {
+                return ResponseFormatter::error(
+                    [
+                        'message' => 'Something when wrong',
+                        'error' => "Data Not Found",
+                    ],
+                    'Delete Data ac Failed',
+                    404,
+                );
+            }
+
+            $ac->forceDelete();
+
+            return ResponseFormatter::success(
+                null,
+                'Delete Data ac Successfully'
+            );
+        } catch (ValidationException $error) {
+            return ResponseFormatter::error(
+                [
+                    'message' => 'Something when wrong',
+                    'error' => array_values($error->errors())[0][0],
+                ],
+                'Delete Data ac Failed',
+                400,
+            );
+        }
+    }
 }

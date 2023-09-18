@@ -107,7 +107,8 @@ class UserController extends Controller
         return ResponseFormatter::success($user, 'Get user data success');
     }
 
-    public function all(request $request){
+    public function all(request $request)
+    {
         $user = User::all();
         return ResponseFormatter::success($user, 'Get all user data success');
     }
@@ -125,6 +126,44 @@ class UserController extends Controller
                 ],
                 'Logout Failed',
                 500,
+            );
+        }
+    }
+
+    function delete(request $request)
+    {
+        try {
+            $request->validate([
+                'id' => 'required',
+            ]);
+
+            $user = User::find($request->id);
+
+            if (!$user) {
+                return ResponseFormatter::error(
+                    [
+                        'message' => 'Something when wrong',
+                        'error' => "Data Not Found",
+                    ],
+                    'Delete Data user$user Failed',
+                    404,
+                );
+            }
+
+            $user->forceDelete();
+
+            return ResponseFormatter::success(
+                null,
+                'Delete Data user$user Successfully'
+            );
+        } catch (ValidationException $error) {
+            return ResponseFormatter::error(
+                [
+                    'message' => 'Something when wrong',
+                    'error' => array_values($error->errors())[0][0],
+                ],
+                'Delete Data user$user Failed',
+                400,
             );
         }
     }

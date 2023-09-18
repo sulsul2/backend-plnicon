@@ -16,8 +16,9 @@ class McbController extends Controller
         return ResponseFormatter::success($mcb->get(), "Get Mcb Successfully");
     }
 
-    function add(request $request){
-        try{
+    function add(request $request)
+    {
+        try {
             $request->validate([
                 'pdb_id' => 'required',
                 'nama' => 'required',
@@ -41,7 +42,7 @@ class McbController extends Controller
                 'tgl_instalasi' => $request->tgl_instalasi,
             ]);
             return ResponseFormatter::success($mcb, 'Create Data Mcb success');
-        }catch(ValidationException $error){
+        } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
                     'message' => 'Something when wrong',
@@ -53,8 +54,9 @@ class McbController extends Controller
         }
     }
 
-    function update(request $request){
-        try{
+    function update(request $request)
+    {
+        try {
             $request->validate([
                 'id' => 'required'
             ]);
@@ -80,7 +82,7 @@ class McbController extends Controller
                 'tgl_instalasi' => $request->tgl_instalasi,
             ]);
             return ResponseFormatter::success($mcb, 'Edit Data Mcb success');
-        }catch(ValidationException $error){
+        } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
                     'message' => 'Something when wrong',
@@ -88,6 +90,44 @@ class McbController extends Controller
                 ],
                 'Add Mcb Failed',
                 500,
+            );
+        }
+    }
+
+    function delete(request $request)
+    {
+        try {
+            $request->validate([
+                'id' => 'required',
+            ]);
+
+            $mcb = Mcb::find($request->id);
+
+            if (!$mcb) {
+                return ResponseFormatter::error(
+                    [
+                        'message' => 'Something when wrong',
+                        'error' => "Data Not Found",
+                    ],
+                    'Delete Data mc$mcb Failed',
+                    404,
+                );
+            }
+
+            $mcb->forceDelete();
+
+            return ResponseFormatter::success(
+                null,
+                'Delete Data mc$mcb Successfully'
+            );
+        } catch (ValidationException $error) {
+            return ResponseFormatter::error(
+                [
+                    'message' => 'Something when wrong',
+                    'error' => array_values($error->errors())[0][0],
+                ],
+                'Delete Data mc$mcb Failed',
+                400,
             );
         }
     }

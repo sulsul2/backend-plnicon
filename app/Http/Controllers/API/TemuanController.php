@@ -42,7 +42,7 @@ class TemuanController extends Controller
             ]);
 
             return ResponseFormatter::success(
-                $temuan->load(['jadwalPm','dataPop']),
+                $temuan->load(['jadwalPm', 'dataPop']),
                 'Create Temuan Successfully'
             );
         } catch (ValidationException $error) {
@@ -97,6 +97,44 @@ class TemuanController extends Controller
                 ],
                 'Edit Temuan Failed',
                 500,
+            );
+        }
+    }
+
+    function delete(request $request)
+    {
+        try {
+            $request->validate([
+                'id' => 'required',
+            ]);
+
+            $temuan = Temuan::find($request->id);
+
+            if (!$temuan) {
+                return ResponseFormatter::error(
+                    [
+                        'message' => 'Something when wrong',
+                        'error' => "Data Not Found",
+                    ],
+                    'Delete Data tem$temuan Failed',
+                    404,
+                );
+            }
+
+            $temuan->forceDelete();
+
+            return ResponseFormatter::success(
+                null,
+                'Delete Data tem$temuan Successfully'
+            );
+        } catch (ValidationException $error) {
+            return ResponseFormatter::error(
+                [
+                    'message' => 'Something when wrong',
+                    'error' => array_values($error->errors())[0][0],
+                ],
+                'Delete Data tem$temuan Failed',
+                400,
             );
         }
     }

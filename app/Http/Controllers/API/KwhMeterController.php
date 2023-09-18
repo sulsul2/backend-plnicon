@@ -10,12 +10,14 @@ use Illuminate\Validation\ValidationException;
 
 class KwhMeterController extends Controller
 {
-    function all(request $request){
+    function all(request $request)
+    {
         $kwh_meter = KwhMeter::with('datapop');
         return ResponseFormatter::success($kwh_meter->get(), "Get Kwh Meter Successfully");
     }
 
-    function add(request $request){
+    function add(request $request)
+    {
         try {
             $request->validate([
                 'pop_id' => 'required',
@@ -49,7 +51,6 @@ class KwhMeterController extends Controller
                 'tgl_instalasi' => $request->tgl_instalasi,
             ]);
             return ResponseFormatter::success($kwh_meter->load('datapop'), "Create Kwh Meter Successfully");
-
         } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
@@ -62,14 +63,15 @@ class KwhMeterController extends Controller
         }
     }
 
-    function update(request $request){
+    function update(request $request)
+    {
         try {
             $request->validate([
                 'id' => 'required',
             ]);
 
             $kwh_meter = KwhMeter::find($request->id);
-            if(!$kwh_meter){
+            if (!$kwh_meter) {
                 return ResponseFormatter::error(
                     null,
                     'Data not found',
@@ -100,7 +102,6 @@ class KwhMeterController extends Controller
                 'tgl_instalasi' => $request->tgl_instalasi,
             ]);
             return ResponseFormatter::success($kwh_meter->load('datapop'), "Edit kwh meter Successfully");
-
         } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
@@ -109,6 +110,44 @@ class KwhMeterController extends Controller
                 ],
                 'Add kwh meter Failed',
                 500,
+            );
+        }
+    }
+
+    function delete(request $request)
+    {
+        try {
+            $request->validate([
+                'id' => 'required',
+            ]);
+
+            $kwh_meter = KwhMeter::find($request->id);
+
+            if (!$kwh_meter) {
+                return ResponseFormatter::error(
+                    [
+                        'message' => 'Something when wrong',
+                        'error' => "Data Not Found",
+                    ],
+                    'Delete Data kw$kwh_meter Failed',
+                    404,
+                );
+            }
+
+            $kwh_meter->forceDelete();
+
+            return ResponseFormatter::success(
+                null,
+                'Delete Data kw$kwh_meter Successfully'
+            );
+        } catch (ValidationException $error) {
+            return ResponseFormatter::error(
+                [
+                    'message' => 'Something when wrong',
+                    'error' => array_values($error->errors())[0][0],
+                ],
+                'Delete Data kw$kwh_meter Failed',
+                400,
             );
         }
     }

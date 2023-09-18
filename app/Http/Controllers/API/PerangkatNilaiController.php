@@ -90,4 +90,42 @@ class PerangkatNilaiController extends Controller
             );
         }
     }
+
+    function delete(request $request)
+    {
+        try {
+            $request->validate([
+                'id' => 'required',
+            ]);
+
+            $perangkat_nilai = PerangkatNilai::find($request->id);
+
+            if (!$perangkat_nilai) {
+                return ResponseFormatter::error(
+                    [
+                        'message' => 'Something when wrong',
+                        'error' => "Data Not Found",
+                    ],
+                    'Delete Data pera$perangkat_nilai Failed',
+                    404,
+                );
+            }
+
+            $perangkat_nilai->forceDelete();
+
+            return ResponseFormatter::success(
+                null,
+                'Delete Data pera$perangkat_nilai Successfully'
+            );
+        } catch (ValidationException $error) {
+            return ResponseFormatter::error(
+                [
+                    'message' => 'Something when wrong',
+                    'error' => array_values($error->errors())[0][0],
+                ],
+                'Delete Data pera$perangkat_nilai Failed',
+                400,
+            );
+        }
+    }
 }

@@ -91,4 +91,42 @@ class PdbNilaiController extends Controller
             );
         }
     }
+
+    function delete(request $request)
+    {
+        try {
+            $request->validate([
+                'id' => 'required',
+            ]);
+
+            $pdb_nilai = PdbNilai::find($request->id);
+
+            if (!$pdb_nilai) {
+                return ResponseFormatter::error(
+                    [
+                        'message' => 'Something when wrong',
+                        'error' => "Data Not Found",
+                    ],
+                    'Delete Data pdb$pdb_nilai Failed',
+                    404,
+                );
+            }
+
+            $pdb_nilai->forceDelete();
+
+            return ResponseFormatter::success(
+                null,
+                'Delete Data pdb$pdb_nilai Successfully'
+            );
+        } catch (ValidationException $error) {
+            return ResponseFormatter::error(
+                [
+                    'message' => 'Something when wrong',
+                    'error' => array_values($error->errors())[0][0],
+                ],
+                'Delete Data pdb$pdb_nilai Failed',
+                400,
+            );
+        }
+    }
 }
