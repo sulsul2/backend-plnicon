@@ -12,7 +12,7 @@ class InverterNilaiController extends Controller
 {
     function all(request $request)
     {
-        $inverter_nilai = InverterNilai::with(['jadwalPm', 'inverter']);
+        $inverter_nilai = InverterNilai::with(['jadwalPm', 'inverter', 'foto']);
         if ($request->pm_id && $request->inverter_id) {
             $inverter_nilai->where('pm_id', $request->pm_id)->where('inverter_id', $request->inverter_id)->first();
             if (!$inverter_nilai) {

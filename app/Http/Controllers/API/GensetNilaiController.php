@@ -12,7 +12,7 @@ class GensetNilaiController extends Controller
 {
     function all(request $request)
     {
-        $genset_nilai = GensetNilai::with(['jadwalPm', 'genset']);
+        $genset_nilai = GensetNilai::with(['jadwalPm', 'genset', 'foto']);
         if ($request->pm_id && $request->genset_id) {
             $genset_nilai->where('pm_id', $request->pm_id)->where('genset_id', $request->genset_id)->first();
             if (!$genset_nilai) {

@@ -12,7 +12,7 @@ class PdbNilaiController extends Controller
 {
     function all(request $request)
     {
-        $pdb_nilai = PdbNilai::with(['jadwalPm', 'pdb']);
+        $pdb_nilai = PdbNilai::with(['jadwalPm', 'pdb', 'foto']);
         if ($request->pm_id && $request->pdb_id) {
             $pdb_nilai->where('pm_id', $request->pm_id)->where('pdb_id', $request->pdb_id)->first();
             if (!$pdb_nilai) {

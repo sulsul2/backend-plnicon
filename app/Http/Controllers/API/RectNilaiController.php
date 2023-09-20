@@ -12,7 +12,7 @@ class RectNilaiController extends Controller
 {
     function all(request $request)
     {
-        $rect_nilai = RectNilai::with(['jadwalPm', 'rect']);
+        $rect_nilai = RectNilai::with(['jadwalPm', 'rect', 'foto']);
         if ($request->pm_id && $request->rect_id) {
             $rect_nilai->where('pm_id', $request->pm_id)->where('rect_id', $request->rect_id)->first();
             if (!$rect_nilai) {

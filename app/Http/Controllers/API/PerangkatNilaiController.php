@@ -12,7 +12,7 @@ class PerangkatNilaiController extends Controller
 {
     function all(request $request)
     {
-        $perangkat_nilai = PerangkatNilai::with(['jadwalpm', 'dataperangkat']);
+        $perangkat_nilai = PerangkatNilai::with(['jadwalpm', 'dataperangkat', 'foto']);
         if ($request->pm_id && $request->perangkat_id) {
             $perangkat_nilai->where('pm_id', $request->pm_id)->where('perangkat_id', $request->perangkat_id)->first();
             if (!$perangkat_nilai) {

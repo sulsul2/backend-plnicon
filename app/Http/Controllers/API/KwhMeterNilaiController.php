@@ -12,7 +12,7 @@ class KwhMeterNilaiController extends Controller
 {
     function all(request $request)
     {
-        $kwh_meter_nilai = KwhMeterNilai::with(['kwhmeter', 'jadwalpm']);
+        $kwh_meter_nilai = KwhMeterNilai::with(['kwhmeter', 'jadwalpm', 'foto']);
         if ($request->pm_id && $request->kwh_id) {
             $kwh_meter_nilai->where('pm_id', $request->pm_id)->where('kwh_id', $request->kwh_id)->first();
             if (!$kwh_meter_nilai) {
