@@ -71,7 +71,7 @@ class AirConditionerFotoController extends Controller
 
             // store foto baru
             $fotoFile = $request->file('fotoFile');
-            $fotoPath = $fotoFile->storeAs('public/foto/ac', 'ac_' . date("Y_m_d_h_m_s", time()) . '.' . $fotoFile->extension());
+            $fotoPath = $fotoFile->storeAs('public/foto/ac', 'ac_' . date("Y_m_d_h_m_s", time()) . '_'. strval(rand(10,1000000)) . '.' . $fotoFile->extension());
 
             $ac_foto->update([
                 'ac_nilai_id' => $request->ac_nilai_id,
