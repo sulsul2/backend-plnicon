@@ -98,7 +98,7 @@ class AirConditionerFotoController extends Controller
                 'id' => 'required',
             ]);
 
-            $ac = AirConditionerNilai::find($request->id);
+            $ac = AirConditionerFoto::find($request->id);
 
             if (!$ac) {
                 return ResponseFormatter::error(
