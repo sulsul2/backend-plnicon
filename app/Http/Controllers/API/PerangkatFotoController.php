@@ -18,30 +18,38 @@ class PerangkatFotoController extends Controller
 
     function add(request $request)
     {
-        try {
+         try {
             $request->validate([
                 'rack_id' => 'required',
                 'perangkat_nilai_id' => 'required',
-                'url' => 'required',
+                'fotoFile' => 'required',
             ]);
+
+            // store foto baru
+            $fotoFile = $request->file('fotoFile');
+            $fotoPath = $fotoFile->storeAs('public/foto/perangkat', 'perangkat_' . date("Y_m_d_h_m_s", time()) . '.' . $fotoFile->extension());
 
             $perangkat_foto = PerangkatFoto::create([
                 'rack_id' => $request->rack_id,
                 'perangkat_nilai_id' => $request->perangkat_nilai_id,
-                'url' => $request->url,
+                'url' => $fotoPath,
                 'deskripsi' => $request->deskripsi,
             ]);
-            return ResponseFormatter::success($perangkat_foto->load(['rack', 'perangkatnilai']), "Create Perangkat Foto Successfully");
+            return ResponseFormatter::success(
+                $perangkat_foto,
+                'Create Data perangkat Foto success'
+            );
         } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
                     'message' => 'Something when wrong',
                     'error' => array_values($error->errors())[0][0],
                 ],
-                'Add Perangkat Foto Failed',
+                'Create Data perangkat Foto Failed',
                 500,
             );
         }
+       
     }
 
     function update(request $request)

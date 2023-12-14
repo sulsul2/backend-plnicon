@@ -21,22 +21,29 @@ class KwhFotoController extends Controller
         try {
             $request->validate([
                 'kwh_nilai_id' => 'required',
-                'url' => 'required',
+                'fotoFile' => 'required',
             ]);
+
+            // store foto baru
+            $fotoFile = $request->file('fotoFile');
+            $fotoPath = $fotoFile->storeAs('public/foto/kwh', 'kwh_' . date("Y_m_d_h_m_s", time()) . '.' . $fotoFile->extension());
 
             $kwh_foto = KwhFoto::create([
                 'kwh_nilai_id' => $request->kwh_nilai_id,
-                'url' => $request->url,
+                'url' => $fotoPath,
                 'deskripsi' => $request->deskripsi,
             ]);
-            return ResponseFormatter::success($kwh_foto->load('kwhnilai'), "Create Kwh Foto Successfully");
+            return ResponseFormatter::success(
+                $kwh_foto,
+                'Create Data KWH Foto success'
+            );
         } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
                     'message' => 'Something when wrong',
                     'error' => array_values($error->errors())[0][0],
                 ],
-                'Add kwh nilai Nilai Failed',
+                'Create Data KWH Foto Failed',
                 500,
             );
         }
