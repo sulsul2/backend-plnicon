@@ -13,6 +13,17 @@ class ExAlarmController extends Controller
     function all(request $request)
     {
         $ex_alarm = ExAlarm::with(['jadwalPm', 'dataPop', 'foto']);
+        if ($request->pm_id && $request->inverter_id) {
+            $ex_alarm->where('pm_id', $request->pm_id)->where('pop_id', $request->pop_id)->first();
+            if (!$ex_alarm) {
+                return ResponseFormatter::error(
+                    null,
+                    'Data not found',
+                    404
+                );
+            }
+            return ResponseFormatter::success($ex_alarm->get(), "Get Ex Alarm Successfully");
+        }
         return ResponseFormatter::success($ex_alarm->get(), "Get Ex Alarm Successfully");
     }
 
