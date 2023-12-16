@@ -15,7 +15,7 @@ class DataPopController extends Controller
     {
         $data_pop = DataPop::all();
         if ($request->id) {
-            $data = DataPop::with(['genset', 'inverter', 'kwh', 'ac', 'pdb.mcb', 'environment', 'ex_alarm', 'rect.baterai', 'rect.modul', 'rack.perangkat'])->where('id', $request->id);
+            $data = DataPop::with(['genset', 'inverter', 'kwh', 'ac', 'ats', 'pdb.mcb', 'environment', 'ex_alarm', 'rect.baterai', 'rect.modul', 'rack.perangkat'])->where('id', $request->id);
             if (!$data) {
                 return ResponseFormatter::error(
                     null,

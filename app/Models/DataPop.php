@@ -41,6 +41,9 @@ class DataPop extends Model
     public function ac(){
         return $this->hasMany(AirConditioner::class,'pop_id','id');
     }
+    public function ats(){
+        return $this->hasMany(Ats::class,'pop_id','id');
+    }
     public function rect(){
         return $this->hasMany(Rect::class,'pop_id','id');
     }
