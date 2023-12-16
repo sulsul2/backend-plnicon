@@ -13,7 +13,7 @@ class ExAlarmController extends Controller
     function all(request $request)
     {
         $ex_alarm = ExAlarm::with(['jadwalPm', 'dataPop', 'foto']);
-        if ($request->pm_id && $request->inverter_id) {
+        if ($request->pm_id && $request->pop_id) {
             $ex_alarm->where('pm_id', $request->pm_id)->where('pop_id', $request->pop_id)->first();
             if (!$ex_alarm) {
                 return ResponseFormatter::error(

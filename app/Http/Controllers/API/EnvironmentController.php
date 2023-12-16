@@ -12,8 +12,19 @@ class EnvironmentController extends Controller
 {
     function all(request $request)
     {
-        $environment = Environment::with('foto');
-        return ResponseFormatter::success($environment, 'Get Environment Successfully');
+        $environment = Environment::with(['jadwalPm', 'dataPop', 'foto']);
+        if ($request->pm_id && $request->pop_id) {
+            $environment->where('pm_id', $request->pm_id)->where('pop_id', $request->pop_id)->first();
+            if (!$environment) {
+                return ResponseFormatter::error(
+                    null,
+                    'Data not found',
+                    404
+                );
+            }
+            return ResponseFormatter::success($environment->get(), "Get Environment Successfully");
+        }
+        return ResponseFormatter::success($environment->get(), "Get Environment Successfully");
     }
 
     function add(request $request)
