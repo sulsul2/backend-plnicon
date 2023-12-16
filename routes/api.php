@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\AirConditionerController;
 use App\Http\Controllers\API\AirConditionerFotoController;
 use App\Http\Controllers\API\AirConditionerNilaiController;
+use App\Http\Controllers\API\AtsController;
 use App\Http\Controllers\API\BateraiNilaiController;
 use App\Http\Controllers\API\BateraiController;
 use App\Http\Controllers\API\DataPerangkatController;
@@ -136,6 +137,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('rect', [RectController::class, "add"]);
     Route::post('edit-rect', [RectController::class, "update"]);
     Route::post('delete-rect', [RectController::class, "delete"]);
+
+    //Rect
+    Route::get('ats', [AtsController::class, "all"]);
+    Route::post('ats', [AtsController::class, "add"]);
+    Route::post('edit-ats', [AtsController::class, "update"]);
+    Route::post('delete-ats', [AtsController::class, "delete"]);
 
     //Modul
     Route::get('modul', [ModulController::class, "all"]);

@@ -4,53 +4,46 @@ namespace App\Http\Controllers\API;
 
 use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
-use App\Models\DataPerangkat;
+use App\Models\Ats;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
-class DataPerangkatController extends Controller
+class AtsController extends Controller
 {
     function all(request $request)
     {
-        $data_perangkat = DataPerangkat::with('datarack');
-        return ResponseFormatter::success($data_perangkat->get(), "Get Data Perangkat Successfully");
+        $ats = Ats::with('dataPop');
+        return ResponseFormatter::success($ats->get(), "Get Ats Successfully");
     }
 
     function add(request $request)
     {
         try {
             $request->validate([
-                'rack_id' => 'required',
-                'nama' => 'required',
-                'merk' => 'required',
-                'sumber_main' => 'required',
-                'sumber_backup' => 'required',
-                'terminasi' => 'required',
-                'jenis' => 'required',
+                'pop_id' => 'required',
                 'tipe' => 'required',
+                'sn' => 'required',
+                'merk' => 'required',
+                'status' => 'required',
                 'tgl_instalasi' => 'required',
             ]);
 
-            $data_perangkat = DataPerangkat::create([
-                'rack_id' => $request->rack_id,
-                'nama' => $request->nama,
-                'merk' => $request->merk,
-                'sumber_main' => $request->sumber_main,
-                'sumber_backup' => $request->sumber_backup,
-                'terminasi' => $request->terminasi,
-                'jenis' => $request->jenis,
+            $ats = Ats::create([
+                'pop_id' => $request->pop_id,
                 'tipe' => $request->tipe,
+                'sn' => $request->sn,
+                'merk' => $request->merk,
+                'status' => $request->status,
                 'tgl_instalasi' => $request->tgl_instalasi,
-
             ]);
-            return ResponseFormatter::success($data_perangkat->load('datarack'), "Create Data Perangkat Successfully");
+            return ResponseFormatter::success($ats, 'Create Data Ats success');
         } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
                     'message' => 'Something when wrong',
                     'error' => array_values($error->errors())[0][0],
                 ],
-                'Add Data Perangkat Failed',
+                'Add Ats Failed',
                 500,
             );
         }
@@ -60,11 +53,11 @@ class DataPerangkatController extends Controller
     {
         try {
             $request->validate([
-                'id' => 'required',
+                'id' => 'required'
             ]);
 
-            $data_perangkat = DataPerangkat::find($request->id);
-            if (!$data_perangkat) {
+            $ats = Ats::find($request->id);
+            if (!$ats) {
                 return ResponseFormatter::error(
                     null,
                     'Data not found',
@@ -72,25 +65,22 @@ class DataPerangkatController extends Controller
                 );
             }
 
-            $data_perangkat->update([
-                'rack_id' => $request->rack_id,
-                'nama' => $request->nama,
-                'merk' => $request->merk,
-                'sumber_main' => $request->sumber_main,
-                'sumber_backup' => $request->sumber_backup,
-                'terminasi' => $request->terminasi,
-                'jenis' => $request->jenis,
-                'tipe' => $request->tipe,
-                'tgl_instalasi' => $request->tgl_instalasi,
+            $ats->update([
+                'pop_id' => 'required',
+                'tipe' => 'required',
+                'sn' => 'required',
+                'merk' => 'required',
+                'status' => 'required',
+                'tgl_instalasi' => 'required',
             ]);
-            return ResponseFormatter::success($data_perangkat->load('datarack'), "Edit Data Perangkat Successfully");
+            return ResponseFormatter::success($ats, 'Edit Data Ats success');
         } catch (ValidationException $error) {
             return ResponseFormatter::error(
                 [
                     'message' => 'Something when wrong',
                     'error' => array_values($error->errors())[0][0],
                 ],
-                'Add Data Perangkat Failed',
+                'Add Ats Failed',
                 500,
             );
         }
@@ -103,24 +93,24 @@ class DataPerangkatController extends Controller
                 'id' => 'required',
             ]);
 
-            $perangkat = DataPerangkat::find($request->id);
+            $ats = Ats::find($request->id);
 
-            if (!$perangkat) {
+            if (!$ats) {
                 return ResponseFormatter::error(
                     [
                         'message' => 'Something when wrong',
                         'error' => "Data Not Found",
                     ],
-                    'Delete Data perangkat Failed',
+                    'Delete Data ats Failed',
                     404,
                 );
             }
 
-            $perangkat->forceDelete();
+            $ats->forceDelete();
 
             return ResponseFormatter::success(
                 null,
-                'Delete Data perangkat Successfully'
+                'Delete Data ats Successfully'
             );
         } catch (ValidationException $error) {
             return ResponseFormatter::error(
@@ -128,7 +118,7 @@ class DataPerangkatController extends Controller
                     'message' => 'Something when wrong',
                     'error' => array_values($error->errors())[0][0],
                 ],
-                'Delete Data perangkat Failed',
+                'Delete Data ats Failed',
                 400,
             );
         }
